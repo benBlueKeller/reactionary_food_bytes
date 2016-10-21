@@ -4,7 +4,7 @@
   "description": "a react program for keeping track of food in the pantry and possible recipes",
   "main": "app.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server . -p 3020"
   },
   "repository": {
     "type": "git",

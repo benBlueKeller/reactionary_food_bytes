@@ -1,0 +1,19 @@
+{
+  "name": "reactionary_food_bytes",
+  "version": "1.0.0",
+  "description": "a react program for keeping track of food in the pantry and possible recipes",
+  "main": "app.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benBlueKeller/reactionary_food_bytes.git"
+  },
+  "author": "Ben Keller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benBlueKeller/reactionary_food_bytes/issues"
+  },
+  "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme"
+}

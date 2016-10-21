@@ -1,4 +1,4 @@
-var food = [
+var FOOD = [
 	{
 		name: "coconut milk"
 	},
@@ -19,7 +19,7 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired,
 };
 
-function Player(props) {
+function Item(props) {
 	return (
 		<div className="item">
 			<div className="item-name">
@@ -29,10 +29,14 @@ function Player(props) {
 	);
 }
 
+Item.propTypes = {
+	name: React.PropTypes.string.isRequired,
+};
+
 var Application = React.createClass({
 	propTypes: {
 		title: React.PropTypes.string,
-		food: React.PropTypes.arrayOf(React.PropTypes.shape({
+		initialFood: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
 		})).isRequired,
 	},
@@ -43,20 +47,26 @@ var Application = React.createClass({
 	    }
   	},
 
+  	getInitialState: function() {
+  		return {
+  			food: this.props.initialFood
+  		};
+  	},
+
 	render: function() {
 		return(
 			<div className="tile">
 			<Header title={this.props.title} />
+			<div className="items">
+				{this.state.food.map(function(item) {
+					return(
+						<Item name={item.name}/>
+						);
+				}.bind(this))}
+			</div>
 			</div>
 		);
 	}
 });
-/*
-function Application(props) {
-	return(
-			<div className="tile">
-			</div>
-		);
-}*/
 
-ReactDOM.render(<Application food={food}/>, document.getElementById('container'));
+ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));

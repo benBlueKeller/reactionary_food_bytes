@@ -1,3 +1,12 @@
+var food = [
+	{
+		name: "coconut milk"
+	},
+	{
+		name: "curry paste"
+	}
+];
+
 function Header(props) {
   return (
     <div className="header">
@@ -10,9 +19,22 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired,
 };
 
+function Player(props) {
+	return (
+		<div className="item">
+			<div className="item-name">
+				{props.name}
+			</div>
+		</div>
+	);
+}
+
 var Application = React.createClass({
 	propTypes: {
-		title: React.PropTypes.string
+		title: React.PropTypes.string,
+		food: React.PropTypes.arrayOf(React.PropTypes.shape({
+			name: React.PropTypes.string.isRequired,
+		})).isRequired,
 	},
 
 	getDefaultProps: function() {
@@ -37,4 +59,4 @@ function Application(props) {
 		);
 }*/
 
-ReactDOM.render(<Application />, document.getElementById('container'));
+ReactDOM.render(<Application food={food}/>, document.getElementById('container'));

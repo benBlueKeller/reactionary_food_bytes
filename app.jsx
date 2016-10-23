@@ -32,7 +32,7 @@ function Item(props) {
 
 Item.propTypes = {
 	name: React.PropTypes.string.isRequired,
-	
+	onRemove: React.PropTypes.func.isRequired
 };
 
 var AddItemForm = React.createClass({
@@ -104,6 +104,11 @@ var Application = React.createClass({
   		this.setState(this.state);
   	},
 
+  	onItemRemove: function(index) {
+  		this.state.food.splice(index, 1);
+  		this.setState(this.state);
+  	},
+
 	render: function() {
 		return(
 			<div className="tile">
@@ -112,7 +117,7 @@ var Application = React.createClass({
 					{this.state.food.map(function(item, index) {
 						return(
 							// TODO:: as you think about data structures, find better keys
-							<Item name={item.name} key={index}/>
+							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={index}/>
 							);
 					}.bind(this))}
 				</div>

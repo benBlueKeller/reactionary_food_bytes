@@ -23,6 +23,7 @@ function Item(props) {
 	return (
 		<div className="item">
 			<div className="item-name">
+				<a className="remove-item" onClick={props.onRemove}>✖</a>
 				{props.name}
 			</div>
 		</div>
@@ -31,6 +32,7 @@ function Item(props) {
 
 Item.propTypes = {
 	name: React.PropTypes.string.isRequired,
+	
 };
 
 var AddItemForm = React.createClass({

@@ -37,6 +37,16 @@ body {
   border-bottom: solid 2px #444;
   letter-spacing: 2px;
 }
+	.remove-item {
+	visibility: hidden;
+	margin-right: 10px;
+	color: #e57373;
+	cursor: pointer;
+	}
+
+	.item-name:hover .remove-item {
+	visibility: visible;
+	}
 
 	.item-name {
     flex-grow: 1;

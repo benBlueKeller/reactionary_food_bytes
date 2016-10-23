@@ -88,17 +88,33 @@ var Application = React.createClass({
   		};
   	},
 
+  	onItemAdd: function(name) {
+  		/**note on why push isn't in setState
+  		 * the state variable is pushed
+  		 * then the setState is updated
+  		 * otherwise there's an error
+  		 * because .push does not return
+  		 * an object of state variablesonon
+  		 */
+  		this.state.food.push({
+  			name: name,
+  		});
+  		this.setState(this.state);
+  	},
+
 	render: function() {
 		return(
 			<div className="tile">
-			<Header title={this.props.title} />
-			<div className="items">
-				{this.state.food.map(function(item, index) {
-					return(
-						<Item name={item.name} key={index}/>
-						);
-				}.bind(this))}
-			</div>
+				<Header title={this.props.title} />
+				<div className="items">
+					{this.state.food.map(function(item, index) {
+						return(
+							// TODO:: as you think about data structures, find better keys
+							<Item name={item.name} key={index}/>
+							);
+					}.bind(this))}
+				</div>
+				<AddItemForm onAdd={this.onItemAdd} />
 			</div>
 		);
 	}

@@ -4,7 +4,9 @@
   "description": "a react program for keeping track of food in the pantry and possible recipes",
   "main": "app.jsx",
   "scripts": {
-    "start": "http-server . -p 3020"
+    "api": "http-server ..\\api -p 3021",
+    "serve": "http-server . -p 3020",
+    "start": "concurrently \"npm run api\" \"npm run serve\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme",
   "devDependencies": {
     "babel-eslint": "^7.0.0",
-    "eslint": "^3.8.1"
+    "eslint": "^3.8.1",
+    "concurrently": "^3.1.0"
   }
 }

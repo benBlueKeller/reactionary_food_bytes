@@ -100,7 +100,7 @@ var SearchUSDA = React.createClass({
   render: function(props) {
     return (
       <div className = "tile">
-        <Header title="SearchUSDA" />
+        <Header title="Search USDA" />
 
       </div>);
   }

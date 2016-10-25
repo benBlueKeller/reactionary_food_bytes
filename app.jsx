@@ -92,16 +92,69 @@ var AddItemForm = React.createClass({
   }
 });
 
+function SearchedItem(props) {
+  return (
+    <div className="item">
+      <div className="item-name">
+        {props.name}
+        <a className="remove-item" onClick={props.onSelect}>&#9757</a>
+      </div>
+    </div>
+    );
+}
+
+SearchedItem.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  onSelect: React.PropTypes.func.isRequired
+};
+
 var SearchUSDA = React.createClass({
+  propTypes: {
+    onSelect: React.PropTypes.func.isRequired,
+  },
+
+  getInitialState: function() {
+    return {
+      results: []
+    };
+  },
+
   sendReq: function(search) {
-    // body...
+    var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
+    var newWindow = window.open(url, "searchJSON");
+    var onLoad = function() {
+      var resJSON = JSON.parse(this.responseText);
+      for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
+        this.state.results.push({
+          name: resJSON.list.item[i].name,
+          nbdno: resJSON.list.item[i].nbdno
+        });
+      }
+      this.setState(this.state);
+    }.bind(this);
+    var req = new XMLHttpRequest();
+    req.addEventListener("load", onLoad);
+    req.open("GET", url);
+    req.send();
+  },
+
+  onSelect: function(index) {
+    this.props.onSelect(this.state.results[index]);
   },
 
   render: function(props) {
     return (
       <div className = "tile">
         <Header title="Search USDA" />
-
+        <TextForm onSubmit={this.sendReq} btnText="Search" />
+        <div className="items">
+            {this.state.results.map(function(item, index) {
+              return(
+                // TODO:: as you think about data structures, find better keys
+                <SeachedItem name={item.name} onSelect={function() {this.onSelect(index)}.bind(this)} key={index}/>
+                );
+            }.bind(this))}
+          </div>
       </div>);
   }
 });
@@ -160,7 +213,7 @@ var Application = React.createClass({
   				</div>
   				<AddItemForm onAdd={this.onItemAdd} />
   			</div>
-        <SearchUSDA />
+        <SearchUSDA onSelect={this.onItemAdd} />
       </div>
 		);
 	}

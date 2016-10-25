@@ -35,6 +35,47 @@ Item.propTypes = {
 	onRemove: React.PropTypes.func.isRequired
 };
 
+var TextForm = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired,
+    btnText: React.PropTypes.string
+  },
+
+  getDefaultProps: function() {
+      return {
+        btnText: 'Submit',
+      }
+    },
+
+  getInitialState: function() {
+    return {
+      input: "",
+    };
+  },
+  
+  onInputChange: function(e) {
+    this.setState({input: e.target.value});
+  },
+  
+  onSubmit: function(e) {
+    e.preventDefault();
+  
+    this.props.onSubmit(this.state.input);
+    this.setState({input: ""});
+  },
+
+  render: function() {
+    return (
+      <div className="add-item-form">
+        <form onSubmit={this.onSubmit}>
+          <input type="text" value={this.state.input} onChange={this.onInputChange} />
+          <input type="submit" value={this.props.btnText} />
+        </form>
+      </div>
+    ); 
+  }
+});
+
 var AddItemForm = React.createClass({
   propTypes: {
     onAdd: React.PropTypes.func.isRequired,
@@ -67,6 +108,20 @@ var AddItemForm = React.createClass({
         </form>
       </div>
     ); 
+  }
+});
+
+var SearchUSDA = React.createClass({
+  sendReq: function(search) {
+    // body...
+  },
+
+  render: function(props) {
+    return (
+      <div className = "tile">
+        <Header title="SearchUSDA" />
+
+      </div>);
   }
 });
 
@@ -111,18 +166,21 @@ var Application = React.createClass({
 
 	render: function() {
 		return(
-			<div className="tile">
-				<Header title={this.props.title} />
-				<div className="items">
-					{this.state.food.map(function(item, index) {
-						return(
-							// TODO:: as you think about data structures, find better keys
-							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={index}/>
-							);
-					}.bind(this))}
-				</div>
-				<AddItemForm onAdd={this.onItemAdd} />
-			</div>
+      <div>
+  			<div className="tile">
+  				<Header title={this.props.title} />
+  				<div className="items">
+  					{this.state.food.map(function(item, index) {
+  						return(
+  							// TODO:: as you think about data structures, find better keys
+  							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={index}/>
+  							);
+  					}.bind(this))}
+  				</div>
+  				<AddItemForm onAdd={this.onItemAdd} />
+  			</div>
+        <SearchUSDA />
+      </div>
 		);
 	}
 });

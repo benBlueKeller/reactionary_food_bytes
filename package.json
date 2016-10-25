@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/benBlueKeller/reactionary_food_bytes/issues"
   },
-  "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme"
+  "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme",
+  "devDependencies": {
+    "babel-eslint": "^7.0.0",
+    "eslint": "^3.8.1"
+  }
 }

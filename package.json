@@ -6,7 +6,8 @@
   "scripts": {
     "api": "http-server ..\\api -p 3021",
     "serve": "http-server . -p 3020",
-    "start": "concurrently \"npm run api\" \"npm run serve\""
+    "start": "concurrently \"npm run api\" \"npm run serve\"",
+    "open": "concurrently \"npm run api\" \"npm run serve\" \"start chrome http://127.0.0.1:3020\""
   },
   "repository": {
     "type": "git",

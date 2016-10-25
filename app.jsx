@@ -121,9 +121,8 @@ var SearchUSDA = React.createClass({
 
   sendReq: function(search) {
     var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
-    var newWindow = window.open(url, "searchJSON");
-    var onLoad = function() {
-      var resJSON = JSON.parse(this.responseText);
+    //var newWindow = window.open(url, "searchJSON");
+    var showResults = function(resJSON) {
       for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
         this.state.results.push({
           name: resJSON.list.item[i].name,
@@ -132,6 +131,9 @@ var SearchUSDA = React.createClass({
       }
       this.setState(this.state);
     }.bind(this);
+    var onLoad = function() {
+      showResults(JSON.parse(this.responseText));
+    };
     var req = new XMLHttpRequest();
     req.addEventListener("load", onLoad);
     req.open("GET", url);
@@ -151,7 +153,7 @@ var SearchUSDA = React.createClass({
             {this.state.results.map(function(item, index) {
               return(
                 // TODO:: as you think about data structures, find better keys
-                <SeachedItem name={item.name} onSelect={function() {this.onSelect(index)}.bind(this)} key={index}/>
+                <SearchedItem name={item.name} onSelect={function() {this.onSelect(index)}.bind(this)} key={index}/>
                 );
             }.bind(this))}
           </div>

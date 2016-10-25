@@ -81,32 +81,13 @@ var AddItemForm = React.createClass({
     onAdd: React.PropTypes.func.isRequired,
   },
   
-  getInitialState: function() {
-    return {
-      name: "",
-    };
+  onSubmit: function(name) {
+    this.props.onAdd(name);
   },
-  
-  onNameChange: function(e) {
-    this.setState({name: e.target.value});
-  },
-  
-  onSubmit: function(e) {
-    e.preventDefault();
-  
-    this.props.onAdd(this.state.name);
-    this.setState({name: ""});
-  },
-  
   
   render: function() {
     return (
-      <div className="add-item-form">
-        <form onSubmit={this.onSubmit}>
-          <input type="text" value={this.state.name} onChange={this.onNameChange} />
-          <input type="submit" value="Add Item" />
-        </form>
-      </div>
+      <TextForm onSubmit={this.onSubmit} btnText="Add Item" />
     ); 
   }
 });

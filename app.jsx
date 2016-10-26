@@ -3,7 +3,8 @@ var FOOD = [
 		name: "coconut milk"
 	},
 	{
-		name: "curry paste"
+		name: "Mae Ploy Yellow Curry Paste",
+    ndbno: "45103142"
 	}
 ];
 
@@ -92,22 +93,6 @@ var AddItemForm = React.createClass({
   }
 });
 
-function SearchedItem(props) {
-  return (
-    <div className="item">
-      <div className="item-name">
-        {props.name}
-        <a className="remove-item" onClick={props.onSelect}>&#9757</a>
-      </div>
-    </div>
-    );
-}
-
-SearchedItem.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  onSelect: React.PropTypes.func.isRequired
-};
-
 var SearchUSDA = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
@@ -121,12 +106,13 @@ var SearchUSDA = React.createClass({
 
   sendReq: function(search) {
     var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
-    //var newWindow = window.open(url, "searchJSON");
+    var newWindow = window.open(url, "searchJSON");
     var showResults = function(resJSON) {
+      this.setState(this.state.results = []);
       for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
         this.state.results.push({
           name: resJSON.list.item[i].name,
-          nbdno: resJSON.list.item[i].nbdno
+          ndbno: resJSON.list.item[i].ndbno
         });
       }
       this.setState(this.state);
@@ -141,7 +127,7 @@ var SearchUSDA = React.createClass({
   },
 
   onSelect: function(index) {
-    this.props.onSelect(this.state.results[index]);
+    this.props.onSelect(this.state.results[index].name);
   },
 
   render: function(props) {
@@ -153,7 +139,7 @@ var SearchUSDA = React.createClass({
             {this.state.results.map(function(item, index) {
               return(
                 // TODO:: as you think about data structures, find better keys
-                <SearchedItem name={item.name} onSelect={function() {this.onSelect(index)}.bind(this)} key={index}/>
+                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>
                 );
             }.bind(this))}
           </div>
@@ -166,6 +152,7 @@ var Application = React.createClass({
 		title: React.PropTypes.string,
 		initialFood: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
+      ndbno: React.PropTypes.string
 		})).isRequired,
 	},
 
@@ -181,7 +168,7 @@ var Application = React.createClass({
   		};
   	},
 
-  	onItemAdd: function(name) {
+  	onItemAdd: function(item) {
   		/**note on why push isn't in setState
   		 * the state variable is pushed
   		 * then the setState is updated
@@ -189,11 +176,20 @@ var Application = React.createClass({
   		 * because .push does not return
   		 * an object of state variablesonon
   		 */
-  		this.state.food.push({
-  			name: name,
-  		});
-  		this.setState(this.state);
-  	},
+  		if(typeof item === 'string') {
+        this.state.food.push({
+    			name: item,
+    		});
+    		this.setState(this.state);
+      } else if (typeof item === "object") {
+        this.state.food.push({
+          name: item.name,
+          ndbno: item.ndbno
+        });
+      } else {
+        console.warn("item passed to OnItemAdd neither string nor object");
+      }
+    },
 
   	onItemRemove: function(index) {
   		this.state.food.splice(index, 1);
@@ -209,7 +205,7 @@ var Application = React.createClass({
   					{this.state.food.map(function(item, index) {
   						return(
   							// TODO:: as you think about data structures, find better keys
-  							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={index}/>
+  							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
   							);
   					}.bind(this))}
   				</div>

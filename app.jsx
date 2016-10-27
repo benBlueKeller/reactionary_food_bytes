@@ -157,44 +157,44 @@ var Application = React.createClass({
 	},
 
 	getDefaultProps: function() {
-	    return {
-	      title: 'Pantry',
-	    }
-  	},
+    return {
+      title: 'Pantry',
+    }
+	},
 
-  	getInitialState: function() {
-  		return {
-  			food: this.props.initialFood
-  		};
-  	},
+	getInitialState: function() {
+		return {
+			food: this.props.initialFood
+		};
+	},
 
-  	onItemAdd: function(item) {
-  		/**note on why push isn't in setState
-  		 * the state variable is pushed
-  		 * then the setState is updated
-  		 * otherwise there's an error
-  		 * because .push does not return
-  		 * an object of state variablesonon
-  		 */
-  		if(typeof item === 'string') {
-        this.state.food.push({
-    			name: item,
-    		});
-    		this.setState(this.state);
-      } else if (typeof item === "object") {
-        this.state.food.push({
-          name: item.name,
-          ndbno: item.ndbno
-        });
-      } else {
-        console.warn("item passed to OnItemAdd neither string nor object");
-      }
-    },
-
-  	onItemRemove: function(index) {
-  		this.state.food.splice(index, 1);
+	onItemAdd: function(item) {
+		/**note on why push isn't in setState
+		 * the state variable is pushed
+		 * then the setState is updated
+		 * otherwise there's an error
+		 * because .push does not return
+		 * an object of state variablesonon
+		 */
+		if(typeof item === 'string') {
+      this.state.food.push({
+  			name: item,
+  		});
   		this.setState(this.state);
-  	},
+    } else if (typeof item === "object") {
+      this.state.food.push({
+        name: item.name,
+        ndbno: item.ndbno
+      });
+    } else {
+      console.warn("item passed to OnItemAdd neither string nor object");
+    }
+  },
+
+	onItemRemove: function(index) {
+		this.state.food.splice(index, 1);
+		this.setState(this.state);
+	},
 
 	render: function() {
 		return(

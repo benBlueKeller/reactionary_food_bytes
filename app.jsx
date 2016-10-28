@@ -20,6 +20,21 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired,
 };
 
+function Counter(props) {
+  return (
+      <div className="counter">
+        <button className="counter-action decrement" onClick={function() {props.onChange(-1);}}> - </button>
+        <div className="counter-qty"> {props.qty} </div>
+        <button className="counter-action increment" onClick={function() {props.onChange(1);}}> + </button>
+      </div>
+    );
+}
+
+Counter.propTypes = {
+  onChange: React.PropTypes.func.isRequired,
+  qty: React.PropTypes.number.isRequired
+}
+
 function Item(props) {
 	return (
 		<div className="item">

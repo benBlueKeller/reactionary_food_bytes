@@ -1,10 +1,12 @@
 var FOOD = [
 	{
-		name: "coconut milk"
+		name: "coconut milk",
+    qty: 42
 	},
 	{
 		name: "Mae Ploy Yellow Curry Paste",
-    ndbno: "45103142"
+    ndbno: "45103142",
+    qty: 402
 	}
 ];
 
@@ -42,13 +44,18 @@ function Item(props) {
 				<a className="remove-item" onClick={props.onRemove}>✖</a>
 				{props.name}
 			</div>
+      <div className="item-qty">
+        <Counter onChange={props.onChange} qty={props.qty} />
+      </div>
 		</div>
 	);
 }
 
 Item.propTypes = {
 	name: React.PropTypes.string.isRequired,
-	onRemove: React.PropTypes.func.isRequired
+	onRemove: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  qty: React.PropTypes.number.isRequired
 };
 
 var TextForm = React.createClass({
@@ -167,7 +174,8 @@ var Application = React.createClass({
 		title: React.PropTypes.string,
 		initialFood: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
-      ndbno: React.PropTypes.string
+      ndbno: React.PropTypes.string,
+      qty: React.PropTypes.number.isRequired
 		})).isRequired,
 	},
 
@@ -194,12 +202,14 @@ var Application = React.createClass({
 		if(typeof item === 'string') {
       this.state.food.push({
   			name: item,
+        qty: 13
   		});
   		this.setState(this.state);
     } else if (typeof item === "object") {
       this.state.food.push({
         name: item.name,
-        ndbno: item.ndbno
+        ndbno: item.ndbno,
+        qty: 13
       });
     } else {
       console.warn("item passed to OnItemAdd neither string nor object");
@@ -211,6 +221,11 @@ var Application = React.createClass({
 		this.setState(this.state);
 	},
 
+  onItemQtyChange: function(index, delta) {
+    this.state.food[index].qty += delta;
+    this.setState(this.state);
+  },
+
 	render: function() {
 		return(
       <div>
@@ -220,7 +235,11 @@ var Application = React.createClass({
   					{this.state.food.map(function(item, index) {
   						return(
   							// TODO:: as you think about data structures, find better keys
-  							<Item name={item.name} onRemove={function() {this.onItemRemove(index)}.bind(this)} key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
+  							<Item name={item.name} 
+                qty={item.qty}
+                onChange ={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
+                onRemove={function() {this.onItemRemove(index)}.bind(this)} 
+                key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
   							);
   					}.bind(this))}
   				</div>

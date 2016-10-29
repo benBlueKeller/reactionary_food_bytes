@@ -169,6 +169,25 @@ var SearchUSDA = React.createClass({
   }
 });
 
+var Cart = React.createClass({
+  render: function(props) {
+    return (
+      <div className = "tile">
+        <Header title="Search USDA" />
+        <TextForm onSubmit={this.sendReq} btnText="Search" />
+        <div className="items">
+            {this.state.results.map(function(item, index) {
+              return(
+                // TODO:: as you think about data structures, find better keys
+                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>
+                );
+            }.bind(this))}
+          </div>
+      </div>
+    );
+  }
+});
+
 var Application = React.createClass({
 	propTypes: {
 		title: React.PropTypes.string,

@@ -164,7 +164,26 @@ var SearchUSDA = React.createClass({
                 <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>
                 );
             }.bind(this))}
-          </div>
+        </div>
+      </div>);
+  }
+});
+
+var SearchForm = React.createClass({
+  propTypes: {
+    onSelect: React.PropTypes.func.isRequired,
+  },
+  
+  render: function(props) {
+    return (
+      <div>
+        <TextForm onSubmit={this.sendReq} btnText="Search" />
+        <div className="items">
+            {this.state.results.map(function(item, index) {
+              return(
+                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>);
+            }.bind(this))}
+        </div>
       </div>);
   }
 });

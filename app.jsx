@@ -115,7 +115,7 @@ var AddItemForm = React.createClass({
   }
 });
 
-var SearchUSDA = React.createClass({
+/*var SearchUSDA = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
   },
@@ -128,7 +128,7 @@ var SearchUSDA = React.createClass({
 
   sendReq: function(search) {
     var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
-    var newWindow = window.open(url, "searchJSON");
+    //var newWindow = window.open(url, "searchJSON");
     var showResults = function(resJSON) {
       this.setState(this.state.results = []);
       for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
@@ -139,6 +139,7 @@ var SearchUSDA = React.createClass({
       }
       this.setState(this.state);
     }.bind(this);
+    //onload is unbound to be response object: passes JSON to bound object
     var onLoad = function() {
       showResults(JSON.parse(this.responseText));
     };
@@ -149,7 +150,7 @@ var SearchUSDA = React.createClass({
   },
 
   onSelect: function(index) {
-    this.props.onSelect(this.state.results[index].name);
+    this.props.onSelect(this.state.results[index]);
   },
 
   render: function(props) {
@@ -167,14 +168,66 @@ var SearchUSDA = React.createClass({
         </div>
       </div>);
   }
-});
+});*/
+
+function SearchUSDA(props) {
+  return (
+    <div className = "tile">
+      <Header title="Search USDA" />
+      <SearchForm onSelect={props.onSelect} />
+    </div>);
+};
+
+SearchUSDA.propTypes = {
+  onSelect: React.PropTypes.func.isRequired,
+};
 
 var SearchForm = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
   },
-  
-  render: function(props) {
+
+  getInitialState: function() {
+    return {
+      results: []
+    };
+  },
+
+  sendReq: function(search) {
+    var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
+    //var newWindow = window.open(url, "searchJSON");
+    var showResults = function(resJSON) {
+      this.setState(this.state.results = []);
+      try {
+        for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
+          this.state.results.push({
+            name: resJSON.list.item[i].name,
+            ndbno: resJSON.list.item[i].ndbno
+          });
+        }
+      } catch(e) {
+        this.state.results.push({
+          name: "No Items Found",
+          ndbno: "failure"
+        })
+      }
+      this.setState(this.state);
+    }.bind(this);
+    //onload is unbound to be response object: passes JSON to bound object
+    var onLoad = function() {
+      showResults(JSON.parse(this.responseText));
+    };
+    var req = new XMLHttpRequest();
+    req.addEventListener("load", onLoad);
+    req.open("GET", url);
+    req.send();
+  },
+
+  onSelect: function(index) {
+    this.props.onSelect(this.state.results[index]);
+  },
+
+  render: function() {
     return (
       <div>
         <TextForm onSubmit={this.sendReq} btnText="Search" />
@@ -189,7 +242,7 @@ var SearchForm = React.createClass({
 });
 
 var Cart = React.createClass({
-  render: function(props) {
+  render: function() {
     return (
       <div className = "tile">
         <Header title="Search USDA" />
@@ -249,6 +302,7 @@ var Application = React.createClass({
         ndbno: item.ndbno,
         qty: 13
       });
+      this.setState(this.state);
     } else {
       console.warn("item passed to OnItemAdd neither string nor object");
     }
@@ -282,8 +336,8 @@ var Application = React.createClass({
   					}.bind(this))}
   				</div>
   				<AddItemForm onAdd={this.onItemAdd} />
-  			</div>
-        <SearchUSDA onSelect={this.onItemAdd} />
+          <SearchForm onSelect={this.onItemAdd} />
+        </div>
       </div>
 		);
 	}

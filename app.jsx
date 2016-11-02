@@ -38,6 +38,8 @@ var createItemObj = function(ndbno) {
   });
 };
 
+
+
 console.log(createItemObj("45103142"));
 
 for(var i in FOOD) {
@@ -233,8 +235,11 @@ var Cart = React.createClass({
     this.setState(this.state);
   },
 
-  changeExpDate: function(item) {
-    
+  changeExpDate: function(index, delta) {
+    var d = this.state.food[index].expDate || new Date();
+    d.setDate(d.getDate() + delta);
+    this.setState(this.state.food[index].expDate = d);
+    console.log(this.state.food[index])
   },
 
   render: function() {

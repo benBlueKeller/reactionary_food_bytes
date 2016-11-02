@@ -7,8 +7,43 @@ var FOOD = [
 		name: "Mae Ploy Yellow Curry Paste",
     ndbno: "45103142",
     qty: 402
-	}
+	},
+  {
+    name: "Parsnips, raw", 
+    ndbno: "11298",
+    qty: 24
+  }
 ];
+
+var AJAX = function(url, callback) {
+  var onLoad = function() {
+    callback(JSON.parse(this.responseText));
+  };
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", onLoad);
+  req.open("GET", url);
+  req.send();
+}
+
+var createItemObj = function(ndbno) {
+  var item = {};
+  return AJAX(window.url.food(ndbno), function(json) {
+    console.log(json);
+    item = json.report.food;
+    return {
+    name: item.name,
+    ndbno: ndbno,
+    serving: item.nutrients[0].qty,
+    label: item.nutrients[0].label
+    }
+  });
+};
+
+console.log(createItemObj("45103142"));
+
+for(var i in FOOD) {
+  console.log(window.url.food(FOOD[i].ndbno));
+}
 
 function Header(props) {
   return (
@@ -149,6 +184,7 @@ var SearchForm = React.createClass({
             name: resJSON.list.item[i].name,
             ndbno: resJSON.list.item[i].ndbno
           });
+          console.log(createItemObj(this.state.ndbno))
         }
       } catch(e) {
         this.state.results.push({
@@ -158,14 +194,7 @@ var SearchForm = React.createClass({
       }
       this.setState(this.state);
     }.bind(this);
-    //onload is unbound to be response object: passes JSON to bound object
-    var onLoad = function() {
-      showResults(JSON.parse(this.responseText));
-    };
-    var req = new XMLHttpRequest();
-    req.addEventListener("load", onLoad);
-    req.open("GET", url);
-    req.send();
+    AJAX(url, showResults);    
   },
 
   onSelect: function(index) {
@@ -203,6 +232,10 @@ var Cart = React.createClass({
       ndbno: item.ndbno
     });
     this.setState(this.state);
+  },
+
+  changeExpDate: function(item) {
+    
   },
 
   render: function() {

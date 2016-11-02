@@ -268,7 +268,7 @@ var Cart = React.createClass({
             {this.state.food.map(function(item, index) {
               return(
                 // TODO:: as you think about data structures, find better keys
-                <Item name={item.name} onRemove={function() {this.props.onItemAdd(index)}.bind(this)} key={item.ndbno}/>
+                <Item name={item.name} onRemove={function() {this.props.onItemAdd(item)}.bind(this)} key={item.ndbno}/>
                 );
             }.bind(this))}
           </div>
@@ -315,6 +315,7 @@ var Application = React.createClass({
   		});
   		this.setState(this.state);
     } else if (typeof item === "object") {
+      console.warn(item);
       this.state.food.push({
         name: item.name,
         ndbno: item.ndbno,

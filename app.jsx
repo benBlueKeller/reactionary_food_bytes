@@ -242,19 +242,37 @@ var SearchForm = React.createClass({
 });
 
 var Cart = React.createClass({
+  propTypes: {
+    onItemAdd: React.PropTypes.func.isRequired,
+  },
+
+  getInitialState: function() {
+    return {
+      food: []
+    };
+  },
+
+  addItem: function(item) {
+    this.state.food.push({
+      name: item.name,
+      ndbno: item.ndbno
+    });
+    this.setState(this.state);
+  },
+
   render: function() {
     return (
       <div className = "tile">
-        <Header title="Search USDA" />
-        <TextForm onSubmit={this.sendReq} btnText="Search" />
+        <Header title="Cart" />
         <div className="items">
-            {this.state.results.map(function(item, index) {
+            {this.state.food.map(function(item, index) {
               return(
                 // TODO:: as you think about data structures, find better keys
-                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>
+                <Item name={item.name} onRemove={function() {this.props.onItemAdd(index)}.bind(this)} key={item.ndbno}/>
                 );
             }.bind(this))}
           </div>
+        <SearchForm onSelect={this.addItem} btnText="Search" />
       </div>
     );
   }
@@ -304,7 +322,7 @@ var Application = React.createClass({
       });
       this.setState(this.state);
     } else {
-      console.warn("item passed to OnItemAdd neither string nor object");
+      console.warn("item passed to OnItemAdd neither string nor object. type is " + typeof item + "\nItem is " + item);
     }
   },
 
@@ -338,6 +356,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
+        <Cart onItemAdd={this.onItemAdd} />
       </div>
 		);
 	}

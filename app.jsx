@@ -17,7 +17,7 @@ var FOOD = [
 
 var AJAX = function(url, callback) {
   var onLoad = function() {
-    callback(JSON.parse(this.responseText));
+    return callback(JSON.parse(this.responseText));
   };
   var req = new XMLHttpRequest();
   req.addEventListener("load", onLoad);
@@ -26,10 +26,9 @@ var AJAX = function(url, callback) {
 }
 
 var createItemObj = function(ndbno) {
-  var item = {};
   return AJAX(window.url.food(ndbno), function(json) {
     console.log(json);
-    item = json.report.food;
+    var item = json.report.food;
     return {
     name: item.name,
     ndbno: ndbno,

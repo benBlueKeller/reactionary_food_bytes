@@ -115,61 +115,6 @@ var AddItemForm = React.createClass({
   }
 });
 
-/*var SearchUSDA = React.createClass({
-  propTypes: {
-    onSelect: React.PropTypes.func.isRequired,
-  },
-
-  getInitialState: function() {
-    return {
-      results: []
-    };
-  },
-
-  sendReq: function(search) {
-    var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
-    //var newWindow = window.open(url, "searchJSON");
-    var showResults = function(resJSON) {
-      this.setState(this.state.results = []);
-      for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
-        this.state.results.push({
-          name: resJSON.list.item[i].name,
-          ndbno: resJSON.list.item[i].ndbno
-        });
-      }
-      this.setState(this.state);
-    }.bind(this);
-    //onload is unbound to be response object: passes JSON to bound object
-    var onLoad = function() {
-      showResults(JSON.parse(this.responseText));
-    };
-    var req = new XMLHttpRequest();
-    req.addEventListener("load", onLoad);
-    req.open("GET", url);
-    req.send();
-  },
-
-  onSelect: function(index) {
-    this.props.onSelect(this.state.results[index]);
-  },
-
-  render: function(props) {
-    return (
-      <div className = "tile">
-        <Header title="Search USDA" />
-        <TextForm onSubmit={this.sendReq} btnText="Search" />
-        <div className="items">
-            {this.state.results.map(function(item, index) {
-              return(
-                // TODO:: as you think about data structures, find better keys
-                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>
-                );
-            }.bind(this))}
-        </div>
-      </div>);
-  }
-});*/
-
 function SearchUSDA(props) {
   return (
     <div className = "tile">

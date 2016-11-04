@@ -37,9 +37,6 @@ var createItemObj = function(ndbno) {
     }
   });
 };
-
-
-
 console.log(createItemObj("45103142"));
 
 for(var i in FOOD) {
@@ -50,13 +47,92 @@ function Header(props) {
   return (
     <div className="header">
       <h1>{props.title}</h1>
+      {props.action ? <HeaderButton action={props.action} /> : <div></div>}
     </div>
   );
 }
 
 Header.propTypes = {
   title: React.PropTypes.string.isRequired,
+  action: React.PropTypes.func
 };
+
+/**
+ * Stopwatch is just that, it takes no props and handles all state (except Date) internally                      [description]
+ */
+var Stopwatch = React.createClass({
+  getInitialState: function() {
+    return {
+      running: false,
+      elapsedTime: 0,
+      previousTime: 0,
+    }
+  },
+  
+  componentDidMount: function() {
+    this.interval = setInterval(this.onTick, 100);
+  },
+  
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
+  },
+  
+  onTick: function() {
+    if (this.state.running) {
+      var now = Date.now();
+      this.setState({
+        previousTime: now,
+        elapsedTime: this.state.elapsedTime + (now - this.state.previousTime),
+      });
+    }
+  },
+  
+  onStart: function() {
+    this.setState({ 
+      running: true,
+      previousTime: Date.now(),
+    });
+  },
+  
+  onStop: function() {
+    this.setState({ running: false });
+  },
+  
+  onReset: function() {
+    this.setState({
+      elapsedTime: 0,
+      previousTime: Date.now(),
+    });
+  },
+  
+  render: function() {
+    var seconds = Math.floor(this.state.elapsedTime / 1000);
+    return (
+      <div className="stopwatch">
+        <h2>Stopwatch</h2>
+        <div className="stopwatch-time">{seconds}</div>
+        { this.state.running ? 
+          <button onClick={this.onStop}>Stop</button> 
+          : 
+          <button onClick={this.onStart}>Start</button>
+        } 
+        <button onClick={this.onReset}>Reset</button>
+      </div>
+    );
+  }
+});
+
+function HeaderButton(props) {
+  return (
+    <div className="stopwatch">
+      <button onClick={props.action}> - </button>
+    </div>
+  );
+}
+
+HeaderButton.propTypes = {
+  action: React.PropTypes.func.isRequired
+}
 
 function Counter(props) {
   return (
@@ -185,7 +261,7 @@ var SearchForm = React.createClass({
             name: resJSON.list.item[i].name,
             ndbno: resJSON.list.item[i].ndbno
           });
-          console.log(createItemObj(this.state.ndbno))
+          console.log(createItemObj(this.state.ndbno));
         }
       } catch(e) {
         this.state.results.push({
@@ -219,6 +295,7 @@ var SearchForm = React.createClass({
 var Cart = React.createClass({
   propTypes: {
     onItemAdd: React.PropTypes.func.isRequired,
+    onFinish: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -248,10 +325,12 @@ var Cart = React.createClass({
     return d ? months[d.getMonth()] + ' ' + d.getDate() : 'who kno'
   },
 
+  onFinish: function() {this.props.onFinish(this.state.food)},
+
   render: function() {
     return (
       <div className = "tile">
-        <Header title="Cart" />
+        <Header title="Cart" action={this.onFinish} />
         <div className="items">
             {this.state.food.map(function(item, index) {
               return(
@@ -333,7 +412,7 @@ var Application = React.createClass({
 		return(
       <div>
   			<div className="tile">
-  				<Header title={this.props.title} />
+  				<Header title={this.props.title} stopwatch={false} />
   				<div className="items">
   					{this.state.food.map(function(item, index) {
   						return(
@@ -349,7 +428,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Cart onItemAdd={this.onItemAdd} />
+        <Cart onItemAdd={this.onItemAdd} onFinish={function(items) {items.map(function(item, index) { this.onItemAdd(item)}.bind(this))}} />
       </div>
 		);
 	}

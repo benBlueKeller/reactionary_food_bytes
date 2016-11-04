@@ -31,6 +31,45 @@ body {
   font-weight: normal;
 }
 
+.stopwatch {
+  padding: 15px 10px 5px 10px;
+  margin: -5px -10px -5px 10px;
+  background: #2f2f2f;
+  border-radius: 0 15px 0 0;
+}
+
+  .stopwatch-time {
+    font-family: monospace;
+    font-size: 2em;
+  }
+
+  .stopwatch button {
+    margin: 8px 5px;
+    background-color: #222;
+    border-radius: 5px;
+    padding: 7px 8px;
+    border: none;
+    color: #999;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: none;
+    text-transform: uppercase;
+  }
+
+  .stopwatch button:hover {
+    background: #4b71b5;
+    color: #fafafa;
+    cursor: pointer;
+  }
+
+  .stopwatch h2 {
+    font-size: .6em;
+    margin: 0;
+    font-weight: normal;
+    letter-spacing: 2px;
+    color: #666;
+  }
+
 .item {
   display: flex;
   font-size: 1.2em;

@@ -306,7 +306,8 @@ var Recipe = React.createClass({
   addItem: function(item) {
     this.state.food.push({
       name: item.name,
-      ndbno: item.ndbno
+      ndbno: item.ndbno,
+      qty: item.qty || "You Kno"
     });
     this.setState(this.state);
   },
@@ -317,7 +318,19 @@ var Recipe = React.createClass({
     return (
       <div className = "tile">
       <Header title="Recipe" />
-      <SearchForm onSelect={props.onSelect} />
+      <div className="items">
+        {this.state.food.map(function(item, index) {
+          return(
+            // TODO:: as you think about data structures, find better keys
+            <Item name={item.name} 
+            qty={item.qty}
+            onChange ={this.onFinish}
+            onRemove={function() {this.onItemRemove(index)}.bind(this)} 
+            key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
+            );
+        }.bind(this))}
+      </div>
+      <SearchForm onSelect={this.addItem} />
       </div>
     );
   }
@@ -439,6 +452,21 @@ var Application = React.createClass({
     this.setState(this.state);
   },
 
+  consumeRecipe: function(food) {
+    food.map(function(itemToAdd) {
+      var inPantry = false;
+      this.state.food.map(function(item, index) {if(item.ndbno == itemToAdd.ndbno){
+        item.qty += itemToAdd.qty;
+        this.state.food[index] = item;
+        this.setState(this.state);
+        inPantry = true;
+      }}.bind(this));
+      if(inPantry == false) {
+        this.onItemAdd(itemToAdd);
+      }
+    }.bind(this));
+  },
+
 	render: function() {
 		return(
       <div>
@@ -459,6 +487,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
+        <Recipe onFinish={function(index, delta) { this.onItemQtyChange(index, delta)}}/>
         <Cart onItemAdd={this.onItemAdd} onFinish={function(items) {items.map(function(item, index) { this.onItemAdd(item)}.bind(this))}} />
       </div>
 		);

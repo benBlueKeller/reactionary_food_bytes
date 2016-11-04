@@ -227,15 +227,15 @@ var AddItemForm = React.createClass({
   }
 });
 
-function SearchUSDA(props) {
+function Tile(props) {
   return (
     <div className = "tile">
-      <Header title="Search USDA" />
+      <Header title="Tile" />
       <SearchForm onSelect={props.onSelect} />
     </div>);
 };
 
-SearchUSDA.propTypes = {
+Tile.propTypes = {
   onSelect: React.PropTypes.func.isRequired,
 };
 
@@ -289,6 +289,37 @@ var SearchForm = React.createClass({
             }.bind(this))}
         </div>
       </div>);
+  }
+});
+
+var Recipe = React.createClass({
+  propTypes: {
+    onFinish: React.PropTypes.func.isRequired,
+  },
+
+  getInitialState: function() {
+    return {
+      food: []
+    };
+  },
+
+  addItem: function(item) {
+    this.state.food.push({
+      name: item.name,
+      ndbno: item.ndbno
+    });
+    this.setState(this.state);
+  },
+
+  onFinish: function() {this.props.onFinish(this.state.food)},
+
+  render: function(props) {
+    return (
+      <div className = "tile">
+      <Header title="Recipe" />
+      <SearchForm onSelect={props.onSelect} />
+      </div>
+    );
   }
 });
 

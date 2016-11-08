@@ -312,20 +312,43 @@ var Recipe = React.createClass({
     this.setState(this.state);
   },
 
-  onFinish: function() {this.props.onFinish(this.state.food)},
+
+  /**FAIL: COPY AND PASTE FROM APPLICATION, DINGUS */
+  onItemQtyChange: function(index, delta) {
+    if(typeof this.state.food[index].qty === "number") {
+      this.state.food[index].qty += delta;
+    } else {
+      this.state.food[index].qty = delta;
+    }
+    this.setState(this.state);
+  },
+
+  recipeItemRemove: function(index) {
+    var item = this.state.food[index];
+    console.log(item);
+    this.props.onFinish(item.ndbno, t.state.food[index].qty)
+    this.state.food.splice(index, 1);
+    this.setState(this.state);
+  },
+
+  onFinish: function() {
+    for (var i = 0; i < this.state.food.length; i++) {
+      this.recipeItemRemove(i);
+    }
+  },
 
   render: function(props) {
     return (
       <div className = "tile">
-      <Header title="Recipe" />
+      <Header title="Recipe" action={this.onFinish}/>
       <div className="items">
         {this.state.food.map(function(item, index) {
           return(
             // TODO:: as you think about data structures, find better keys
             <Item name={item.name} 
             qty={item.qty}
-            onChange ={this.onFinish}
-            onRemove={function() {this.onItemRemove(index)}.bind(this)} 
+            onChange ={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
+            onRemove={function(index) {this.recipeItemRemove(index)}.bind(this)} 
             key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
             );
         }.bind(this))}
@@ -452,6 +475,14 @@ var Application = React.createClass({
     this.setState(this.state);
   },
 
+  changeQtyNdbno: function(ndbno, delta) {
+    this.state.food.map(function(item, index) {
+      if(item.ndbno === ndbno) {
+        this.onItemQtyChange(index, delta);
+      }
+    }.bind(this));
+  },
+
   consumeRecipe: function(food) {
     food.map(function(itemToAdd) {
       var inPantry = false;
@@ -491,8 +522,8 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe onFinish={function(index, delta) { this.onItemQtyChange(index, delta)}}/>
-        <Cart onItemAdd={this.onItemAdd} onFinish={function(items) {items.map(function(item, index) { this.onItemAdd(item)}.bind(this))}} />
+        <Recipe onFinish={this.changeQtyNdbno}/>
+        <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);
 	}

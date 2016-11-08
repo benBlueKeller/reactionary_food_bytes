@@ -359,6 +359,27 @@ var Recipe = React.createClass({
   }
 });
 
+function Recipe(props) {
+  return (
+    <div className = "tile">
+    <Header title="Recipe" action={this.onFinish}/>
+    <div className="items">
+      {this.state.food.map(function(item, index) {
+        return(
+          // TODO:: as you think about data structures, find better keys
+          <Item name={item.name} 
+          qty={item.qty}
+          onChange ={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
+          onRemove={function(index) {this.recipeItemRemove(index)}.bind(this)} 
+          key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
+          );
+      }.bind(this))}
+    </div>
+    <SearchForm onSelect={this.addItem} />
+    </div>
+  );
+}
+
 var Cart = React.createClass({
   propTypes: {
     onItemAdd: React.PropTypes.func.isRequired,
@@ -434,7 +455,10 @@ var Application = React.createClass({
 
 	getInitialState: function() {
 		return {
-			food: this.props.initialFood
+			food: this.props.initialFood,
+      recipe: {
+        food: [],
+      }
 		};
 	},
 

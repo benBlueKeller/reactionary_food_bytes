@@ -467,6 +467,10 @@ var Application = React.createClass({
     }.bind(this));
   },
 
+  mapItemsToAdd: function(items) {
+    items.map(function(item, index) { this.onItemAdd(item)}.bind(this));
+  },
+
 	render: function() {
 		return(
       <div>

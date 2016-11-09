@@ -462,6 +462,17 @@ var Application = React.createClass({
 		};
 	},
 
+  recipeMethods: {
+    onItemQtyChange: function(index, delta) {
+      if(typeof this.state.food[index].qty === "number") {
+        this.state.food[index].qty += delta;
+      } else {
+        this.state.food[index].qty = delta;
+      }
+      this.setState(this.state);
+    },
+  },
+
 	onItemAdd: function(item) {
 		/**note on why push isn't in setState
 		 * the state variable is pushed

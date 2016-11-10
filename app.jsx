@@ -562,7 +562,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe onFinish={this.changeQtyNdbno}/>
+        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food}/>
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

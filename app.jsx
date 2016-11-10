@@ -362,7 +362,7 @@ var SearchForm = React.createClass({
 function Recipe(props) {
   return (
     <div className = "tile">
-    <Header title="Recipe" action={this.onFinish}/>
+    <Header title="Recipe" action={props.onFinish}/>
     <div className="items">
       {props.food.map(function(item, index) {
         return(
@@ -375,14 +375,15 @@ function Recipe(props) {
           );
       }.bind(this))}
     </div>
-    <SearchForm onSelect={this.addItem} />
+    <SearchForm onSelect={props.addItem} />
     </div>
   );
 }
 
 Recipe.propTypes = {
-  onFinish: React.PropTypes.func.isRequired,
-  food: React.PropTypes.array.isRequired
+  onFinish: React.PropTypes.func,
+  food: React.PropTypes.array.isRequired,
+  addItem: React.PropTypes.func.isRequired,
 }
 
 var Cart = React.createClass({
@@ -467,31 +468,21 @@ var Application = React.createClass({
 		};
 	},
 
-  recipeMethods: {
-    onItemQtyChange: function(index, delta) {
-      if(typeof this.state.food[index].qty === "number") {
-        this.state.food[index].qty += delta;
-      } else {
-        this.state.food[index].qty = delta;
-      }
-      this.setState(this.state);
-    },
-  },
 
-	onItemAdd: function(item) {
-		/**note on why push isn't in setState
-		 * the state variable is pushed
-		 * then the setState is updated
-		 * otherwise there's an error
-		 * because .push does not return
-		 * an object of state variablesonon
-		 */
-		if(typeof item === 'string') {
+  onItemAdd: function(item) {
+    /**note on why push isn't in setState
+     * the state variable is pushed
+     * then the setState is updated
+     * otherwise there's an error
+     * because .push does not return
+     * an object of state variablesonon
+     */
+    if(typeof item === 'string') {
       this.state.food.push({
-  			name: item,
+        name: item,
         qty: 13
-  		});
-  		this.setState(this.state);
+      });
+      this.setState(this.state);
     } else if (typeof item === "object") {
       console.warn(item);
       this.state.food.push({
@@ -505,10 +496,10 @@ var Application = React.createClass({
     }
   },
 
-	onItemRemove: function(index) {
-		this.state.food.splice(index, 1);
-		this.setState(this.state);
-	},
+  onItemRemove: function(index) {
+    this.state.food.splice(index, 1);
+    this.setState(this.state);
+  },
 
   onItemQtyChange: function(index, delta) {
     this.state.food[index].qty += delta;
@@ -541,14 +532,34 @@ var Application = React.createClass({
   mapItemsToAdd: function(items) {
     items.map(function(item, index) { this.onItemAdd(item)}.bind(this));
   },
+  
+  recipeMethods: {
+    addItem: function(item) {
+      this.state.recipe.food.push({
+        name: item.name,
+        ndbno: item.ndbno,
+        qty: item.qty || "You Kno"
+      });
+      this.setState(this.state);
+    },
 
-	render: function() {
-		return(
+    onItemQtyChange: function(index, delta) {
+      if(typeof this.state.food[index].qty === "number") {
+        this.state.food[index].qty += delta;
+      } else {
+        this.state.food[index].qty = delta;
+      }
+      this.setState(this.state);
+    },
+  },
+
+  render: function() {
+    return(
       <div>
-  			<div className="tile">
-  				<Header title={this.props.title} stopwatch={false} />
-  				<div className="items">
-  					{this.state.food.map(function(item, index) {
+        <div className="tile">
+          <Header title={this.props.title} stopwatch={false} />
+          <div className="items">
+            {this.state.food.map(function(item, index) {
   						return(
   							// TODO:: as you think about data structures, find better keys
   							<Item name={item.name} 
@@ -562,7 +573,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food}/>
+        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food} addItem={this.recipeMethods.addItem} />
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

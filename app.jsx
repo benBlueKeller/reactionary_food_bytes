@@ -364,7 +364,7 @@ function Recipe(props) {
     <div className = "tile">
     <Header title="Recipe" action={this.onFinish}/>
     <div className="items">
-      {this.state.food.map(function(item, index) {
+      {props.food.map(function(item, index) {
         return(
           // TODO:: as you think about data structures, find better keys
           <Item name={item.name} 
@@ -378,6 +378,11 @@ function Recipe(props) {
     <SearchForm onSelect={this.addItem} />
     </div>
   );
+}
+
+Recipe.propTypes = {
+  onFinish: React.PropTypes.func.isRequired,
+  food: React.PropTypes.array.isRequired
 }
 
 var Cart = React.createClass({

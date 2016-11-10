@@ -383,7 +383,7 @@ function Recipe(props) {
 Recipe.propTypes = {
   onFinish: React.PropTypes.func,
   food: React.PropTypes.array.isRequired,
-  addItem: React.PropTypes.func.isRequired,
+  methods: React.PropTypes.object.isRequired,
 }
 
 var Cart = React.createClass({
@@ -582,7 +582,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food} addItem={this.recipeMethods.addItem} />
+        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food} methods={this.recipeMethods(this.state.recipe.food)} />
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

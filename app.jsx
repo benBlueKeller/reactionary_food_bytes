@@ -292,7 +292,7 @@ var SearchForm = React.createClass({
   }
 });
 
-var Recipe = React.createClass({
+/*var Recipe = React.createClass({
   propTypes: {
     onFinish: React.PropTypes.func.isRequired,
   },
@@ -313,7 +313,7 @@ var Recipe = React.createClass({
   },
 
 
-  /**FAIL: COPY AND PASTE FROM APPLICATION, DINGUS */
+  // FAIL: COPY AND PASTE FROM APPLICATION, DINGUS
   onItemQtyChange: function(index, delta) {
     if(typeof this.state.food[index].qty === "number") {
       this.state.food[index].qty += delta;
@@ -357,7 +357,7 @@ var Recipe = React.createClass({
       </div>
     );
   }
-});
+});*/
 
 function Recipe(props) {
   return (

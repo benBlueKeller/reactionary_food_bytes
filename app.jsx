@@ -477,6 +477,7 @@ var Application = React.createClass({
      * because .push does not return
      * an object of state variablesonon
      */
+    console.log(this);
     if(typeof item === 'string') {
       this.state.food.push({
         name: item,
@@ -484,7 +485,6 @@ var Application = React.createClass({
       });
       this.setState(this.state);
     } else if (typeof item === "object") {
-      console.warn(item);
       this.state.food.push({
         name: item.name,
         ndbno: item.ndbno,
@@ -533,24 +533,33 @@ var Application = React.createClass({
     items.map(function(item, index) { this.onItemAdd(item)}.bind(this));
   },
   
-  recipeMethods: {
-    addItem: function(item) {
-      this.state.recipe.food.push({
-        name: item.name,
-        ndbno: item.ndbno,
-        qty: item.qty || "You Kno"
-      });
-      this.setState(this.state);
-    },
+  recipeMethods: function(food) {
 
-    onItemQtyChange: function(index, delta) {
-      if(typeof this.state.food[index].qty === "number") {
-        this.state.food[index].qty += delta;
-      } else {
-        this.state.food[index].qty = delta;
-      }
-      this.setState(this.state);
-    },
+    function set(newFood) {
+      this.setState(this.state.recipe.food = newFood);
+    }
+
+    set.bind(this);
+
+    return {
+      addItem: function(item) {
+        food.push({
+          name: item.name,
+          ndbno: item.ndbno,
+          qty: item.qty || "You Kno"
+        });
+        set(food);
+      },
+
+      onItemQtyChange: function(index, delta) {
+        if(typeof food[index].qty === "number") {
+          food[index].qty += delta;
+        } else {
+          food[index].qty = delta;
+        }
+        set(food);
+      },
+    }
   },
 
   render: function() {

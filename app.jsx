@@ -375,7 +375,7 @@ function Recipe(props) {
           );
       }.bind(this))}
     </div>
-    <SearchForm onSelect={props.addItem} />
+    <SearchForm onSelect={props.methods.addItem} />
     </div>
   );
 }

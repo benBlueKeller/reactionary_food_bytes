@@ -362,17 +362,16 @@ var SearchForm = React.createClass({
 function Recipe(props) {
   return (
     <div className = "tile">
-    <Header title="Recipe" action={props.onFinish}/>
+    <Header title="Recipe" action={props.methods.recipeItemRemove}/>
     <div className="items">
       {props.food.map(function(item, index) {
-        return(
+        return (
           // TODO:: as you think about data structures, find better keys
           <Item name={item.name} 
           qty={item.qty}
           onChange ={function(delta) {props.methods.onItemQtyChange(index, delta)}.bind(this)}
           onRemove={function(index) {props.methods.recipeItemRemove(index)}.bind(this)} 
-          key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
-          );
+          key={typeof item.ndbno != "undefined" ? item.ndbno : index} /> );
       }.bind(this))}
     </div>
     <SearchForm onSelect={props.methods.addItem} />
@@ -381,7 +380,6 @@ function Recipe(props) {
 }
 
 Recipe.propTypes = {
-  onFinish: React.PropTypes.func,
   food: React.PropTypes.array.isRequired,
   methods: React.PropTypes.object.isRequired,
 }
@@ -506,14 +504,6 @@ var Application = React.createClass({
     this.setState(this.state);
   },
 
-  changeQtyNdbno: function(ndbno, delta) {
-    this.state.food.map(function(item, index) {
-      if(item.ndbno === ndbno) {
-        this.onItemQtyChange(index, delta);
-      }
-    }.bind(this));
-  },
-
   consumeRecipe: function(food) {
     food.map(function(itemToAdd) {
       var inPantry = false;
@@ -588,7 +578,7 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe onFinish={this.changeQtyNdbno} food={this.state.recipe.food} methods={this.recipeMethods(this.state.recipe.food)} />
+        <Recipe food={this.state.recipe.food} methods={this.recipeMethods(this.state.recipe.food)} />
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

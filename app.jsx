@@ -369,8 +369,8 @@ function Recipe(props) {
           // TODO:: as you think about data structures, find better keys
           <Item name={item.name} 
           qty={item.qty}
-          onChange ={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
-          onRemove={function(index) {this.recipeItemRemove(index)}.bind(this)} 
+          onChange ={function(delta) {props.methods.onItemQtyChange(index, delta)}.bind(this)}
+          onRemove={function(index) {props.methods.recipeItemRemove(index)}.bind(this)} 
           key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
           );
       }.bind(this))}

@@ -518,7 +518,7 @@ var Application = React.createClass({
     food.map(function(itemToAdd) {
       var inPantry = false;
       this.state.food.map(function(item, index) {if(item.ndbno == itemToAdd.ndbno){
-        item.qty += itemToAdd.qty;
+        item.qty -= itemToAdd.qty;
         this.state.food[index] = item;
         this.setState(this.state);
         inPantry = true;
@@ -561,6 +561,10 @@ var Application = React.createClass({
         }
         set(food);
       },
+
+      recipeItemRemove: function() {
+        app.consumeRecipe(food);
+      } 
     }
   },
 

@@ -535,8 +535,10 @@ var Application = React.createClass({
   
   recipeMethods: function(food) {
 
+    var app = this;
+
     function set(newFood) {
-      this.setState(this.state.recipe.food = newFood);
+      app.setState(app.state.recipe.food = newFood);
     }
 
     set.bind(this);

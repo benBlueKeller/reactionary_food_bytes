@@ -1,3 +1,20 @@
+function foodIsEqual(f, o) {
+  console.log("untested");
+  if(f.length != o.length) {
+    return false;
+  }
+
+  for (var i = f.length - 1; i >= 0; i--) {
+    if(f[i].ndbno !== o[i].ndbno) {
+      return false;
+    }
+  }
+
+  if(i < 0) {
+    return true;
+  }
+}
+
 var FOOD = [
 	{
 		name: "coconut milk",
@@ -460,7 +477,7 @@ var Application = React.createClass({
 	getInitialState: function() {
 		return {
 			food: this.props.initialFood,
-      recipe: [{
+      recipes: [{
         name: 'Thai Yellow Curry',
         food: [],
       }]
@@ -524,37 +541,43 @@ var Application = React.createClass({
     items.map(function(item, index) { this.onItemAdd(item)}.bind(this));
   },
   
-  recipeMethods: function(food) {
+  recipeMethods: function(recipe) {
 
+    var recipe0 = recipe;
     var app = this;
 
-    function set(newFood) {
-      app.setState(app.state.recipe.food = newFood);
+    function set(newRecipe) {
+      for (var i = app.state.recipes.length - 1; i >= 0; i--) {
+        if(foodIsEqual(app.state.recipes[i].food, recipe0.food)) {  
+          app.setState(app.state.recipes[i] = newRecipe);
+        }
+      }
+      
     }
 
     set.bind(this);
 
     return {
       addItem: function(item) {
-        food.push({
+        recipe.food.push({
           name: item.name,
           ndbno: item.ndbno,
           qty: item.qty || "You Kno"
         });
-        set(food);
+        set(recipe);
       },
 
       onItemQtyChange: function(index, delta) {
-        if(typeof food[index].qty === "number") {
-          food[index].qty += delta;
+        if(typeof recipe.food[index].qty === "number") {
+          recipe.food[index].qty += delta;
         } else {
-          food[index].qty = delta;
+          recipe.food[index].qty = delta;
         }
-        set(food);
+        set(recipe.food);
       },
 
       recipeItemRemove: function() {
-        app.consumeRecipe(food);
+        app.consumeRecipe(recipe);
       } 
     }
   },
@@ -579,7 +602,11 @@ var Application = React.createClass({
   				<AddItemForm onAdd={this.onItemAdd} />
           <SearchForm onSelect={this.onItemAdd} />
         </div>
-        <Recipe food={this.state.recipe.food} methods={this.recipeMethods(this.state.recipe.food)} />
+        {this.state.recipes.map(function(recipe, index) {
+          return (<Recipe key={recipe.name || this.state.recipes.length + 1} 
+                          food={recipe.food} 
+                          methods={this.recipeMethods(recipe)} />)
+        }.bind(this))}
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

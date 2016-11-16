@@ -1,2 +1,5 @@
 .eslintrc
 node_modules/*
+favicon.bmp
+favicon.ico
+omface.bmp

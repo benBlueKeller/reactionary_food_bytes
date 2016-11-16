@@ -477,9 +477,21 @@ var Application = React.createClass({
 	getInitialState: function() {
 		return {
 			food: this.props.initialFood,
-      recipes: [{
+      recipes: [
+      {
         name: 'Thai Yellow Curry',
-        food: [],
+        food: [
+          {
+            name: "Mae Ploy Yellow Curry Paste",
+            ndbno: "45103142",
+            qty: 24
+          },
+          {
+            name: "Coconut Milk",
+            ndbno: "45086905",
+            qty: 402
+          },
+        ],
       }]
 		};
 	},

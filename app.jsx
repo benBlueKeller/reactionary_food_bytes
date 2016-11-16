@@ -460,9 +460,10 @@ var Application = React.createClass({
 	getInitialState: function() {
 		return {
 			food: this.props.initialFood,
-      recipe: {
+      recipe: [{
+        name: 'Thai Yellow Curry',
         food: [],
-      }
+      }]
 		};
 	},
 

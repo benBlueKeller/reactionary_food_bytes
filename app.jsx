@@ -17,10 +17,6 @@ function foodIsEqual(f, o) {
 
 var FOOD = [
 	{
-		name: "coconut milk",
-    qty: 42
-	},
-	{
 		name: "Mae Ploy Yellow Curry Paste",
     ndbno: "45103142",
     qty: 402
@@ -495,6 +491,13 @@ var Application = React.createClass({
       }]
 		};
 	},
+
+  addRecipe: function(recipe) {
+    if(typeof recipe == "string") {
+      this.state.recipes.push({name: recipe, food: []});
+      this.setState(this.state);
+    }
+  },
 
 
   onItemAdd: function(item) {

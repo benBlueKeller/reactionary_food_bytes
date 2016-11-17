@@ -629,6 +629,7 @@ var Application = React.createClass({
                           food={recipe.food}
                           methods={this.recipeMethods(recipe)} />)
         }.bind(this))}
+        <TextForm onSubmit={this.addRecipe} btnText={"add Recipe"} />
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
       </div>
 		);

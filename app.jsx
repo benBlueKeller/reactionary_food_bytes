@@ -44,7 +44,7 @@ var AJAX = function(url, callback) {
 
 var createItemObj = function(ndbno) {
   return AJAX(window.url.food(ndbno), function(json) {
-    console.log(json);
+    //console.log(json);
     var item = json.report.food;
     return {
     name: item.name,
@@ -54,7 +54,7 @@ var createItemObj = function(ndbno) {
     }
   });
 };
-console.log(createItemObj("45103142"));
+//console.log(createItemObj("45103142"));
 
 for(var i in FOOD) {
   console.log(window.url.food(FOOD[i].ndbno));
@@ -560,8 +560,10 @@ var Application = React.createClass({
 
     function set(newRecipe) {
       for (var i = app.state.recipes.length - 1; i >= 0; i--) {
-        if(foodIsEqual(app.state.recipes[i].food, recipe0.food)) {  
+        if(foodIsEqual(app.state.recipes[i].food, recipe0.food)) {
+                        console.log(app.state.recipes[0], "before setState");
           app.setState(app.state.recipes[i] = newRecipe);
+                        console.log(app.state.recipes[0], "after setState");
         }
       }
       
@@ -585,11 +587,11 @@ var Application = React.createClass({
         } else {
           recipe.food[index].qty = delta;
         }
-        set(recipe.food);
+        set(recipe);
       },
 
       recipeItemRemove: function() {
-        app.consumeRecipe(recipe);
+        app.consumeRecipe(recipe.food);
       } 
     }
   },
@@ -615,8 +617,9 @@ var Application = React.createClass({
           <SearchForm onSelect={this.onItemAdd} />
         </div>
         {this.state.recipes.map(function(recipe, index) {
+          console.log(this.state.recipes[index]);
           return (<Recipe key={recipe.name || this.state.recipes.length + 1} 
-                          food={recipe.food} 
+                          food={recipe.food}
                           methods={this.recipeMethods(recipe)} />)
         }.bind(this))}
         <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />

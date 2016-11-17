@@ -558,18 +558,21 @@ var Application = React.createClass({
     var recipe0 = recipe;
     var app = this;
 
+            console.log("Pantry1: " + this.state.food);
+
+    /**
+     * set finds the original recipe in app state
+     * and sets the food equal to food in newRecipe 
+     * @param {object} newRecipe is an object with {name:,food:} of
+     */
     function set(newRecipe) {
       for (var i = app.state.recipes.length - 1; i >= 0; i--) {
         if(foodIsEqual(app.state.recipes[i].food, recipe0.food)) {
-                        console.log(app.state.recipes[0], "before setState");
-          app.setState(app.state.recipes[i] = newRecipe);
-                        console.log(app.state.recipes[0], "after setState");
+          app.state.recipes[i] = newRecipe;
+          app.setState(app.state);
         }
       }
-      
     }
-
-    set.bind(this);
 
     return {
       addItem: function(item) {
@@ -587,6 +590,7 @@ var Application = React.createClass({
         } else {
           recipe.food[index].qty = delta;
         }
+        console.log("Pantry: " + app.state.food);
         set(recipe);
       },
 

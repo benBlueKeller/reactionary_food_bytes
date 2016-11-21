@@ -421,12 +421,12 @@ var Cart = React.createClass({
     var d = this.state.food[index].expDate || new Date();
     d.setDate(d.getDate() + delta);
     this.setState(this.state.food[index].expDate = d);
-    console.log(this.state.food[index])
+    //console.log(this.state.food[index])
   },
 
   createDateString: function(index) {
     var d = this.state.food[index].expDate || false;
-    var months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Nov', 'Dec'];
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'];
     return d ? months[d.getMonth()] + ' ' + d.getDate() : 'who kno'
   },
 

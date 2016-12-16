@@ -4,7 +4,7 @@ var webpack = require('webpack');
  
 module.exports = {
   entry: './app/app.jsx',
-  output: { path: __dirname, filename: 'bundle.js' },
+  output: { path: __dirname + "/public", filename: 'bytes.bundle.js' },
   module: {
     loaders: [
       {

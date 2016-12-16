@@ -22,7 +22,8 @@
   "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme",
   "devDependencies": {
     "babel-eslint": "^7.0.0",
+    "concurrently": "^3.1.0",
     "eslint": "^3.8.1",
-    "concurrently": "^3.1.0"
+    "webpack": "^1.14.0"
   }
 }

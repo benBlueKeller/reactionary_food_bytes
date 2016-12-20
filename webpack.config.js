@@ -9,12 +9,15 @@ module.exports = {
     loaders: [
       {
         test: /.jsx?$/,
-        loader: 'babel-loader',
+        loader: ['babel-loader'],
         exclude: /node_modules/,
         query: {
           presets: ['es2015', 'react']
         }
       }
     ]
+  },
+  resolveLoader: {
+    root: path.join('C:/Users/cloudJumper/AppData/Roaming/npm/node_modules')
   },
 };

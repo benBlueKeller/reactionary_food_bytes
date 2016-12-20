@@ -1,3 +1,6 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 function foodIsEqual(f, o) {
   console.log("untested");
   if(f.length != o.length) {
@@ -52,9 +55,9 @@ var createItemObj = function(ndbno) {
 };
 //console.log(createItemObj("45103142"));
 
-for(var i in FOOD) {
+/*for(var i in FOOD) {
   console.log(window.url.food(FOOD[i].ndbno));
-}
+}*/
 
 function Header(props) {
   return (
@@ -636,4 +639,8 @@ var Application = React.createClass({
 	}
 });
 
-ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));
+//var container = typeof document == 'object' ? document.getElementById('container') : (<div id="container"></div>);
+
+if(typeof document == 'object') {
+  ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));
+}

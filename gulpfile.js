@@ -28,6 +28,22 @@ gulp.task('eslint', function() {
     .pipe(eslint.failAfterError());
 });
 
+// Concatenate jsFiles.vendor and jsFiles.source into one JS file.
+// Run eslint before concatenating
+gulp.task('concat', [/*'copy-react', 'copy-react-dom', */'eslint'], function() {
+  return gulp.src(['vendor/react.js', 'vendor/react-dom.js', jsGlob])
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      only: [
+        'src/js',
+      ],
+      compact: false
+    }))
+    .pipe(concat('bundle.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('public'));
+});
+
 // Watch JS/JSX files
 gulp.task('watch', function() {
   gulp.watch('assets/js/src/**/*.{js,jsx}', ['concat']);

@@ -12,6 +12,22 @@ var reload       = browserSync.reload;
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 
+var jsGlob = 'src/js/*.{js,jsx}'
+
+// Lint JS/JSX files
+gulp.task('eslint', function() {
+  return gulp.src(jsGlob)
+    .pipe(eslint({
+      baseConfig: {
+        "ecmaFeatures": {
+           "jsx": true
+         }
+      }
+    }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
 // Watch JS/JSX files
 gulp.task('watch', function() {
   gulp.watch('assets/js/src/**/*.{js,jsx}', ['concat']);

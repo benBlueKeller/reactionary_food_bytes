@@ -4,9 +4,10 @@
   "description": "a react program for keeping track of food in the pantry and possible recipes",
   "main": "app.jsx",
   "scripts": {
-    "api": "http-server ..\\api -p 3021",
-    "start": "http-server . -p 3020",
-    "serve": "concurrently \"npm run api\" \"npm run start\"",
+    "start": "npm run serve",
+    "serve-api": "http-server ..\\api -p 3021",
+    "serve-this": "http-server . -p 3020",
+    "serve": "concurrently \"npm run serve-api\" \"npm run serve-this\"",
     "chrome": "start chrome http://127.0.0.1:3020",
     "open": "concurrently \"npm run serve\" \"start chrome http://127.0.0.1:3020\""
   },

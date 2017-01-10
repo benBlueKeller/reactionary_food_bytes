@@ -636,4 +636,6 @@ var Application = React.createClass({
 	}
 });
 
-ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));
+export default Application;
+
+//ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));

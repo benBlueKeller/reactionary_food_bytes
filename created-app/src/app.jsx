@@ -1,3 +1,5 @@
+/*es-lint disable*/
+
 import React from 'react';
 
 
@@ -55,9 +57,9 @@ var createItemObj = function(ndbno) {
 };
 //console.log(createItemObj("45103142"));
 
-for(var i in FOOD) {
+/*for(var i in FOOD) {
   console.log(window.url.food(FOOD[i].ndbno));
-}
+}*/
 
 function Header(props) {
   return (
@@ -475,7 +477,7 @@ var Application = React.createClass({
 
 	getInitialState: function() {
 		return {
-			food: this.props.initialFood,
+			food: FOOD,
       recipes: [
       {
         name: 'Thai Yellow Curry',

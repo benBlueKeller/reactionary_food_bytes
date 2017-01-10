@@ -1,3 +1,8 @@
+/* eslint-disable */
+
+import React from 'react';
+
+
 function foodIsEqual(f, o) {
   console.log("untested");
   if(f.length != o.length) {

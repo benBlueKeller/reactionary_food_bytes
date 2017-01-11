@@ -7,7 +7,9 @@ import '../../app.css';
 import Header from './components/header.js';
 import Counter from './components/counter.js';
 import Item from './components/item.js';
-import TextForm from './components/text-form.js'
+import TextForm from './components/text-form.js';
+import AddItemForm from './components/add-item-form.js';
+
 
 function foodIsEqual(f, o) {
   console.log("untested");
@@ -130,22 +132,6 @@ var Stopwatch = React.createClass({
         <button onClick={this.onReset}>Reset</button>
       </div>
     );
-  }
-});
-
-var AddItemForm = React.createClass({
-  propTypes: {
-    onAdd: React.PropTypes.func.isRequired,
-  },
-  
-  onSubmit: function(name) {
-    this.props.onAdd(name);
-  },
-  
-  render: function() {
-    return (
-      <TextForm onSubmit={this.onSubmit} btnText="Add Item" />
-    ); 
   }
 });
 

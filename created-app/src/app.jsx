@@ -1,17 +1,15 @@
-/*eslint-disable*/
 
 import React from 'react';
 
 import '../../app.css';
 
 import Header from './components/header.js';
-import Counter from './components/counter.js';
 import Item from './components/item.js';
-import Tile from './components/tile.js';
 import TextForm from './components/text-form.js';
 import SearchForm from './components/search-form.js';
 import AddItemForm from './components/add-item-form.js';
 import Recipe from './components/recipe.js';
+import Cart from './components/cart.js';
 
 
 function foodIsEqual(f, o) {
@@ -43,146 +41,6 @@ var FOOD = [
     qty: 24
   }
 ];
-
-var AJAX = function(url, callback) {
-  var onLoad = function() {
-    return callback(JSON.parse(this.responseText));
-  };
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", onLoad);
-  req.open("GET", url);
-  req.send();
-}
-
-
-
-/*for(var i in FOOD) {
-  console.log(window.url.food(FOOD[i].ndbno));
-}*/
-
-
-/**
- * Stopwatch is just that, it takes no props and handles all state (except Date) internally                      [description]
- */
-var Stopwatch = React.createClass({
-  getInitialState: function() {
-    return {
-      running: false,
-      elapsedTime: 0,
-      previousTime: 0,
-    }
-  },
-  
-  componentDidMount: function() {
-    this.interval = setInterval(this.onTick, 100);
-  },
-  
-  componentWillUnmount: function() {
-    clearInterval(this.interval);
-  },
-  
-  onTick: function() {
-    if (this.state.running) {
-      var now = Date.now();
-      this.setState({
-        previousTime: now,
-        elapsedTime: this.state.elapsedTime + (now - this.state.previousTime),
-      });
-    }
-  },
-  
-  onStart: function() {
-    this.setState({ 
-      running: true,
-      previousTime: Date.now(),
-    });
-  },
-  
-  onStop: function() {
-    this.setState({ running: false });
-  },
-  
-  onReset: function() {
-    this.setState({
-      elapsedTime: 0,
-      previousTime: Date.now(),
-    });
-  },
-  
-  render: function() {
-    var seconds = Math.floor(this.state.elapsedTime / 1000);
-    return (
-      <div className="stopwatch">
-        <h2>Stopwatch</h2>
-        <div className="stopwatch-time">{seconds}</div>
-        { this.state.running ? 
-          <button onClick={this.onStop}>Stop</button> 
-          : 
-          <button onClick={this.onStart}>Start</button>
-        } 
-        <button onClick={this.onReset}>Reset</button>
-      </div>
-    );
-  }
-});
-
-
-var Cart = React.createClass({
-  propTypes: {
-    onItemAdd: React.PropTypes.func.isRequired,
-    onFinish: React.PropTypes.func
-  },
-
-  getInitialState: function() {
-    return {
-      food: []
-    };
-  },
-
-  addItem: function(item) {
-    this.state.food.push({
-      name: item.name,
-      ndbno: item.ndbno
-    });
-    this.setState(this.state);
-  },
-
-  changeExpDate: function(index, delta) {
-    var d = this.state.food[index].expDate || new Date();
-    d.setDate(d.getDate() + delta);
-    this.setState(this.state.food[index].expDate = d);
-    //console.log(this.state.food[index])
-  },
-
-  createDateString: function(index) {
-    var d = this.state.food[index].expDate || false;
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'];
-    return d ? months[d.getMonth()] + ' ' + d.getDate() : 'who kno'
-  },
-
-  onFinish: function() {this.props.onFinish(this.state.food)},
-
-  render: function() {
-    return (
-      <div className = "tile">
-        <Header title="Cart" action={this.onFinish} />
-        <div className="items">
-            {this.state.food.map(function(item, index) {
-              return(
-                // TODO:: as you think about data structures, find better keys
-                <Item name={item.name} 
-                onRemove={function() {this.props.onItemAdd(item)}.bind(this)} 
-                onChange={function(delta) {this.changeExpDate(index, delta)}.bind(this)} 
-                qty={this.createDateString(index)}
-                key={item.ndbno}/>
-                );
-            }.bind(this))}
-          </div>
-        <SearchForm onSelect={this.addItem} btnText="Search" />
-      </div>
-    );
-  }
-});
 
 var Application = React.createClass({
 	propTypes: {

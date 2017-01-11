@@ -11,6 +11,7 @@ import Tile from './components/tile.js';
 import TextForm from './components/text-form.js';
 import SearchForm from './components/search-form.js';
 import AddItemForm from './components/add-item-form.js';
+import Recipe from './components/recipe.js';
 
 
 function foodIsEqual(f, o) {
@@ -125,32 +126,6 @@ var Stopwatch = React.createClass({
   }
 });
 
-
-
-function Recipe(props) {
-  return (
-    <div className = "tile">
-    <Header title="Recipe" action={props.methods.recipeItemRemove}/>
-    <div className="items">
-      {props.food.map(function(item, index) {
-        return (
-          // TODO:: as you think about data structures, find better keys
-          <Item name={item.name} 
-          qty={item.qty}
-          onChange ={function(delta) {props.methods.onItemQtyChange(index, delta)}.bind(this)}
-          onRemove={function(index) {props.methods.recipeItemRemove(index)}.bind(this)} 
-          key={typeof item.ndbno != "undefined" ? item.ndbno : index} /> );
-      }.bind(this))}
-    </div>
-    <SearchForm onSelect={props.methods.addItem} />
-    </div>
-  );
-}
-
-Recipe.propTypes = {
-  food: React.PropTypes.array.isRequired,
-  methods: React.PropTypes.object.isRequired,
-}
 
 var Cart = React.createClass({
   propTypes: {

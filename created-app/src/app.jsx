@@ -7,7 +7,9 @@ import '../../app.css';
 import Header from './components/header.js';
 import Counter from './components/counter.js';
 import Item from './components/item.js';
+import Tile from './components/tile.js';
 import TextForm from './components/text-form.js';
+import SearchForm from './components/search-form.js';
 import AddItemForm from './components/add-item-form.js';
 
 
@@ -51,19 +53,7 @@ var AJAX = function(url, callback) {
   req.send();
 }
 
-var createItemObj = function(ndbno) {
-  return AJAX(window.url.food(ndbno), function(json) {
-    //console.log(json);
-    var item = json.report.food;
-    return {
-    name: item.name,
-    ndbno: ndbno,
-    serving: item.nutrients[0].qty,
-    label: item.nutrients[0].label
-    }
-  });
-};
-//console.log(createItemObj("45103142"));
+
 
 /*for(var i in FOOD) {
   console.log(window.url.food(FOOD[i].ndbno));
@@ -135,70 +125,7 @@ var Stopwatch = React.createClass({
   }
 });
 
-function Tile(props) {
-  return (
-    <div className = "tile">
-      <Header title="Tile" />
-      <SearchForm onSelect={props.onSelect} />
-    </div>);
-};
 
-Tile.propTypes = {
-  onSelect: React.PropTypes.func.isRequired,
-};
-
-var SearchForm = React.createClass({
-  propTypes: {
-    onSelect: React.PropTypes.func.isRequired,
-  },
-
-  getInitialState: function() {
-    return {
-      results: []
-    };
-  },
-
-  sendReq: function(search) {
-    var url = "http://api.nal.usda.gov/ndb/search/?format=json&q=" + search + "&sort=n&max=25&offset=0&api_key=" + window.apiKeys.gov;
-    //var newWindow = window.open(url, "searchJSON");
-    var showResults = function(resJSON) {
-      this.setState(this.state.results = []);
-      try {
-        for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
-          this.state.results.push({
-            name: resJSON.list.item[i].name,
-            ndbno: resJSON.list.item[i].ndbno
-          });
-          console.log(createItemObj(this.state.ndbno));
-        }
-      } catch(e) {
-        this.state.results.push({
-          name: "No Items Found",
-          ndbno: "failure"
-        })
-      }
-      this.setState(this.state);
-    }.bind(this);
-    AJAX(url, showResults);    
-  },
-
-  onSelect: function(index) {
-    this.props.onSelect(this.state.results[index]);
-  },
-
-  render: function() {
-    return (
-      <div>
-        <TextForm onSubmit={this.sendReq} btnText="Search" />
-        <div className="items">
-            {this.state.results.map(function(item, index) {
-              return(
-                <Item name={item.name} onRemove={function() {this.onSelect(index)}.bind(this)} key={item.ndbno}/>);
-            }.bind(this))}
-        </div>
-      </div>);
-  }
-});
 
 /*var Recipe = React.createClass({
   propTypes: {

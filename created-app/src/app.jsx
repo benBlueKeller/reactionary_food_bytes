@@ -1,9 +1,13 @@
 /*eslint-disable*/
 
-import '../../app.css';
-
 import React from 'react';
 
+import '../../app.css';
+
+import Header from './components/header.js';
+import Counter from './components/counter.js';
+import Item from './components/item.js';
+import TextForm from './components/text-form.js'
 
 function foodIsEqual(f, o) {
   console.log("untested");
@@ -23,11 +27,11 @@ function foodIsEqual(f, o) {
 }
 
 var FOOD = [
-	{
-		name: "Mae Ploy Yellow Curry Paste",
+  {
+    name: "Mae Ploy Yellow Curry Paste",
     ndbno: "45103142",
     qty: 402
-	},
+  },
   {
     name: "Parsnips, raw", 
     ndbno: "11298",
@@ -63,19 +67,6 @@ var createItemObj = function(ndbno) {
   console.log(window.url.food(FOOD[i].ndbno));
 }*/
 
-function Header(props) {
-  return (
-    <div className="header">
-      <h1>{props.title}</h1>
-      {props.action ? <HeaderButton action={props.action} /> : <div></div>}
-    </div>
-  );
-}
-
-Header.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  action: React.PropTypes.func
-};
 
 /**
  * Stopwatch is just that, it takes no props and handles all state (except Date) internally                      [description]
@@ -139,95 +130,6 @@ var Stopwatch = React.createClass({
         <button onClick={this.onReset}>Reset</button>
       </div>
     );
-  }
-});
-
-function HeaderButton(props) {
-  return (
-    <div className="stopwatch">
-      <button onClick={props.action}> - </button>
-    </div>
-  );
-}
-
-HeaderButton.propTypes = {
-  action: React.PropTypes.func.isRequired
-}
-
-function Counter(props) {
-  return (
-      <div className="counter">
-        <button className="counter-action decrement" onClick={function() {props.onChange(-1);}}> - </button>
-        <div className="counter-qty"> {props.qty} </div>
-        <button className="counter-action increment" onClick={function() {props.onChange(1);}}> + </button>
-      </div>
-    );
-}
-
-Counter.propTypes = {
-  onChange: React.PropTypes.func.isRequired,
-  qty: React.PropTypes.number.isRequired
-}
-
-function Item(props) {
-	return (
-		<div className="item">
-			<div className="item-name">
-				<a className="remove-item" onClick={props.onRemove}>✖</a>
-				{props.name}
-			</div>
-      <div className="item-qty">
-        <Counter onChange={props.onChange} qty={props.qty} />
-      </div>
-		</div>
-	);
-}
-
-Item.propTypes = {
-	name: React.PropTypes.string.isRequired,
-	onRemove: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  qty: React.PropTypes.number.isRequired
-};
-
-var TextForm = React.createClass({
-  propTypes: {
-    onSubmit: React.PropTypes.func.isRequired,
-    btnText: React.PropTypes.string
-  },
-
-  getDefaultProps: function() {
-      return {
-        btnText: 'Submit',
-      }
-    },
-
-  getInitialState: function() {
-    return {
-      input: "",
-    };
-  },
-  
-  onInputChange: function(e) {
-    this.setState({input: e.target.value});
-  },
-  
-  onSubmit: function(e) {
-    e.preventDefault();
-  
-    this.props.onSubmit(this.state.input);
-    this.setState({input: ""});
-  },
-
-  render: function() {
-    return (
-      <div className="add-item-form">
-        <form onSubmit={this.onSubmit}>
-          <input type="text" value={this.state.input} onChange={this.onInputChange} />
-          <input type="submit" value={this.props.btnText} />
-        </form>
-      </div>
-    ); 
   }
 });
 

@@ -1,4 +1,6 @@
-/*es-lint disable*/
+/*eslint-disable*/
+
+import '../../app.css';
 
 import React from 'react';
 

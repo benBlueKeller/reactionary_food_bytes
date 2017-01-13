@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import '../../app.css';
 
@@ -14,7 +14,7 @@ import Cart from './components/cart.js';
 
 function foodIsEqual(f, o) {
   console.log("untested");
-  if(f.length != o.length) {
+  if(f.length !== o.length) {
     return false;
   }
 
@@ -42,53 +42,49 @@ var FOOD = [
   }
 ];
 
-var Application = React.createClass({
-	propTypes: {
+export default class Application extends Component {
+	static propTypes = {
 		title: React.PropTypes.string,
 		initialFood: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
       ndbno: React.PropTypes.string,
       qty: React.PropTypes.number.isRequired
 		})).isRequired,
-	},
+	};
 
-	getDefaultProps: function() {
-    return {
-      title: 'Pantry',
-    }
-	},
+	static defaultProps = {
+    title: 'Pantry'
+	};
 
-	getInitialState: function() {
-		return {
-			food: FOOD,
-      recipes: [
-      {
-        name: 'Thai Yellow Curry',
-        food: [
-          {
-            name: "Mae Ploy Yellow Curry Paste",
-            ndbno: "45103142",
-            qty: 24
-          },
-          {
-            name: "Coconut Milk",
-            ndbno: "45086905",
-            qty: 402
-          },
-        ],
-      }]
-		};
-	},
+	state = {
+		food: FOOD,
+    recipes: [
+    {
+      name: 'Thai Yellow Curry',
+      food: [
+        {
+          name: "Mae Ploy Yellow Curry Paste",
+          ndbno: "45103142",
+          qty: 24
+        },
+        {
+          name: "Coconut Milk",
+          ndbno: "45086905",
+          qty: 402
+        },
+      ],
+    }]
+	};
 
-  addRecipe: function(recipe) {
-    if(typeof recipe == "string") {
+  addRecipe = (recipe) => {
+    if(typeof recipe === "string") {
       this.state.recipes.push({name: recipe, food: []});
       this.setState(this.state);
     }
-  },
+  };
 
 
-  onItemAdd: function(item) {
+  onItemAdd = (item) => {
     /**note on why push isn't in setState
      * the state variable is pushed
      * then the setState is updated
@@ -113,38 +109,38 @@ var Application = React.createClass({
     } else {
       console.warn("item passed to OnItemAdd neither string nor object. type is " + typeof item + "\nItem is " + item);
     }
-  },
+  };
 
-  onItemRemove: function(index) {
+  onItemRemove = (index) => {
     this.state.food.splice(index, 1);
     this.setState(this.state);
-  },
+  };
 
-  onItemQtyChange: function(index, delta) {
+  onItemQtyChange = (index, delta) => {
     this.state.food[index].qty += delta;
     this.setState(this.state);
-  },
+  };
 
-  consumeRecipe: function(food) {
+  consumeRecipe = (food) => {
     food.map(function(itemToAdd) {
       var inPantry = false;
-      this.state.food.map(function(item, index) {if(item.ndbno == itemToAdd.ndbno){
+      this.state.food.map(function(item, index) {if(item.ndbno === itemToAdd.ndbno){
         item.qty -= itemToAdd.qty;
         this.state.food[index] = item;
         this.setState(this.state);
         inPantry = true;
       }}.bind(this));
-      if(inPantry == false) {
+      if(inPantry === false) {
         this.onItemAdd(itemToAdd);
       }
     }.bind(this));
-  },
+  };
 
-  mapItemsToAdd: function(items) {
+  mapItemsToAdd = (items) => {
     items.map(function(item, index) { this.onItemAdd(item)}.bind(this));
-  },
+  };
   
-  recipeMethods: function(recipe) {
+  recipeMethods = (recipe) => {
 
     var recipe0 = recipe;
     var app = this;
@@ -189,9 +185,9 @@ var Application = React.createClass({
         app.consumeRecipe(recipe.food);
       } 
     }
-  },
+  };
 
-  render: function() {
+  render() {
     return(
       <div>
         <div className="tile">
@@ -202,9 +198,9 @@ var Application = React.createClass({
   							// TODO:: as you think about data structures, find better keys
   							<Item name={item.name} 
                 qty={item.qty}
-                onChange ={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
+                onChange={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
                 onRemove={function() {this.onItemRemove(index)}.bind(this)} 
-                key={typeof item.ndbno != "undefined" ? item.ndbno : index}/>
+                key={typeof item.ndbno !== "undefined" ? item.ndbno : index}/>
   							);
   					}.bind(this))}
   				</div>
@@ -222,8 +218,6 @@ var Application = React.createClass({
       </div>
 		);
 	}
-});
-
-export default Application;
+};
 
 //ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));

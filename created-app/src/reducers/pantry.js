@@ -1,4 +1,4 @@
-import * as PantryActionTypes from '../actiontypes/pantry';
+import * as PantryActionTypes from '../actionTypes/pantry';
 import initialState from '../initial-state';
 
 export default function Pantry(state=initialState, action) {	

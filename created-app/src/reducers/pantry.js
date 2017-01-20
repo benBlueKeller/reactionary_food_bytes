@@ -1,10 +1,10 @@
 import * as PantryActionTypes from '../actionTypes/pantry';
-import initialState from '../initial-state';
+import { pantry } from '../initial-state';
 
-export default function Pantry(state=initialState, action) {	
+export default function Pantry(state=pantry, action) {	
 	switch(action.type){
 		case PantryActionTypes.ADD_ITEM: {
-			const addItemList = [...state.pantry,   {
+			const addItemList = [...state,   {
 		        name: action.name,
 		        ndbno: action.ndbno,
 		        qty: 0
@@ -17,8 +17,8 @@ export default function Pantry(state=initialState, action) {
 
 		case PantryActionTypes.REMOVE_ITEM: {
 			const removeItemList = [
-				...state.pantry.slice(0, action.index),
-				...state.pantry.slice(action.index + 1)
+				...state.slice(0, action.index),
+				...state.slice(action.index + 1)
 			];
 		    return {
 				...state,
@@ -27,7 +27,7 @@ export default function Pantry(state=initialState, action) {
 		}
 
 		case PantryActionTypes.CHANGE_ITEM_QTY: {
-			const updateItemList = state.pantry.map((item, index) => {
+			const updateItemList = state.map((item, index) => {
 				if(index === action.index){
 					return {
 						...item,

@@ -23,6 +23,10 @@ export const shopListChangeItemQty = (index, delta) => {
 	}
 };
 
+/**
+ * Basket actions
+ */
+
 export const basketAddItem = (name, nbdno = "") => {
 	return {
 		type: PantryActionTypes.basketADD_ITEM,

@@ -11,6 +11,15 @@ const initialState = {
 			qty: 24
 		}
 	],
+  
+  cart: {
+    shopList: {
+      food: []
+    },
+    basket: {
+      food: []
+    }
+  },
 
 	recipes: [
     {
@@ -27,7 +36,9 @@ const initialState = {
           qty: 402
         },
       ],
-    }]
+    }
+  ]
 }
 
+export const cart = initialState.cart;
 export default initialState;

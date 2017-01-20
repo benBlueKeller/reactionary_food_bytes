@@ -1,9 +1,9 @@
 //reducers/cart.js combines a reducer for shopList & basket
 import { combineReducers } from 'redux';
-
+import { cart } from '../initial-state';
 import * as CartActionTypes from '../actionTypes/cart';
 
-function shopList(state, action) {	
+function shopList(state = cart.shopList, action) {	
 	switch(action.type){
 	    case CartActionTypes.shopListADD_ITEM: {
 			const addItemList = [...state.food,   {
@@ -49,7 +49,7 @@ function shopList(state, action) {
 	}
 }
 
-function basket(state, action) {	
+function basket(state = cart.basket, action) {	
 	switch(action.type){
 	    case CartActionTypes.basketADD_ITEM: {
 			const addItemList = [...state.food,   {

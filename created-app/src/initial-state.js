@@ -40,5 +40,7 @@ const initialState = {
   ]
 }
 
+export const pantry = initialState.pantry;
 export const cart = initialState.cart;
+export const recipes = initialState.recipes;
 export default initialState;

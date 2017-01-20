@@ -4,30 +4,30 @@ import { pantry } from '../initial-state';
 export default function Pantry(state=pantry, action) {	
 	switch(action.type){
 		case PantryActionTypes.ADD_ITEM: {
-			const addItemList = [...state,   {
+			const addItemList = [...state.food,   {
 		        name: action.name,
 		        ndbno: action.ndbno,
 		        qty: 0
 		    }];
 		    return {
-		        ...state,
-						pantry: addItemList
-				 	};
-			}
+				...state,
+				food: addItemList
+		 	};
+		}
 
 		case PantryActionTypes.REMOVE_ITEM: {
 			const removeItemList = [
-				...state.slice(0, action.index),
-				...state.slice(action.index + 1)
+				...state.food.slice(0, action.index),
+				...state.food.slice(action.index + 1)
 			];
 		    return {
 				...state,
-				pantry: removeItemList
+				food: removeItemList
 			};
 		}
 
 		case PantryActionTypes.CHANGE_ITEM_QTY: {
-			const updateItemList = state.map((item, index) => {
+			const updateItemList = state.food.map((item, index) => {
 				if(index === action.index){
 					return {
 						...item,
@@ -38,7 +38,7 @@ export default function Pantry(state=pantry, action) {
 			});
 			return {
 				...state,
-				pantry: updateItemList
+				food: updateItemList
 			};
 		}
 

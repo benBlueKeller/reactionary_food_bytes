@@ -1,31 +1,36 @@
-import * as CartActionTypes from '../actionTypes/pantry.js';
+import * as RecipeActionTypes from '../actionTypes/pantry.js';
 
-export const addItem = (name, nbdno = "") => {
+export const addItem = (name, nbdno = "", recipeIndex) => {
 	return {
-		type: CartActionTypes.ADD_ITEM,
+		type: RecipeActionTypes.ADD_ITEM,
 		name,
-		nbdno
+		nbdno,
+		recipeIndex
 	}
 };
 
-export const selectItem = index => {
-	return {
-		type: CartActionTypes.SELECT_ITEM,
-		index
-	}
-};
 
-export const removeItem = index => {
+export const removeItem = (index, recipeIndex) => {
 	return {
-		type: CartActionTypes.REMOVE_ITEM,
-		index
-	}
-};
-
-export const changeItemQty = (index, delta) => {
-	return {
-		type: CartActionTypes.CHANGE_ITEM_QTY,
+		type: RecipeActionTypes.REMOVE_ITEM,
 		index,
-		delta
+		recipeIndex
+	}
+};
+
+export const changeItemQty = (index, delta, recipeIndex) => {
+	return {
+		type: RecipeActionTypes.CHANGE_ITEM_QTY,
+		index,
+		delta,
+		recipeIndex
+	}
+};
+
+export const selectRecipe = (index, recipeIndex) => {
+	return {
+		type: RecipeActionTypes.SELECT_RECIPE,
+		index,
+		recipeIndex
 	}
 };

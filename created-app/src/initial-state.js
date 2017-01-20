@@ -23,23 +23,26 @@ const initialState = {
     }
   },
 
-	recipes: [
-    {
-      name: 'Thai Yellow Curry',
-      food: [
-        {
-          name: "Mae Ploy Yellow Curry Paste",
-          ndbno: "45103142",
-          qty: 24
-        },
-        {
-          name: "Coconut Milk",
-          ndbno: "45086905",
-          qty: 402
-        },
-      ],
-    }
-  ]
+	recipes: {
+    mine: [
+      {
+        name: 'Thai Yellow Curry',
+        food: [
+          {
+            name: "Mae Ploy Yellow Curry Paste",
+            ndbno: "45103142",
+            qty: 24
+          },
+          {
+            name: "Coconut Milk",
+            ndbno: "45086905",
+            qty: 402
+          },
+        ],
+      }
+    ],
+    selected: -1
+  }
 }
 
 export const pantry = initialState.pantry;

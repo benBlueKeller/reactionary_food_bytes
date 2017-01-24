@@ -27,10 +27,9 @@ export const changeItemQty = (index, delta, recipeIndex) => {
 	}
 };
 
-export const selectRecipe = (index, recipeIndex) => {
+export const selectRecipe = recipeIndex => {
 	return {
 		type: RecipeActionTypes.SELECT_RECIPE,
-		index,
 		recipeIndex
 	}
 };

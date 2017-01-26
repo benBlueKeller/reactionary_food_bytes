@@ -4,7 +4,7 @@ const initialState = {
       {
         name: "Mae Ploy Yellow Curry Paste",
         ndbno: "45103142",
-        qty: 402
+        qty: 502
       },
       {
         name: "Parsnips, raw", 

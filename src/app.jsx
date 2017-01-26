@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import '../app.css';
 
@@ -42,10 +43,10 @@ var FOOD = [
   }
 ];
 
-export default class Application extends Component {
+class Pantry extends Component {
 	static propTypes = {
 		title: React.PropTypes.string,
-		initialFood: React.PropTypes.arrayOf(React.PropTypes.shape({
+		food: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
       ndbno: React.PropTypes.string,
       qty: React.PropTypes.number.isRequired
@@ -57,7 +58,7 @@ export default class Application extends Component {
 	};
 
 	state = {
-		food: FOOD,
+		food: this.props.food,
     recipes: [
     {
       name: 'Thai Yellow Curry',
@@ -220,4 +221,11 @@ export default class Application extends Component {
 	}
 };
 
+const mapStateToProps = state => (
+  {
+    food: state.pantry.food
+  }
+)
+
+export default connect(mapStateToProps)(Pantry);
 //ReactDOM.render(<Application initialFood={FOOD}/>, document.getElementById('container'));

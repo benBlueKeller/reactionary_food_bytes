@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 
-import '../../app.css';
+import '../app.css';
 
 import Header from './components/header.js';
 import Item from './components/item.js';

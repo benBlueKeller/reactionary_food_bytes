@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "food-bytes",
   "version": "0.1.0",
   "private": true,
@@ -15,19 +14,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-=======
-  "name": "reactionary_food_bytes",
-  "version": "1.0.0",
-  "description": "a react program for keeping track of food in the pantry and possible recipes",
-  "main": "app.jsx",
-  "scripts": {
-    "start": "npm run serve",
-    "serve-api": "http-server ..\\api -p 3021",
-    "serve-this": "http-server . -p 3020",
-    "serve": "concurrently \"npm run serve-api\" \"npm run serve-this\"",
-    "chrome": "start chrome http://127.0.0.1:3020",
-    "open": "concurrently \"npm run serve\" \"start chrome http://127.0.0.1:3020\""
   },
+  "description": "a react program for keeping track of food in the pantry and possible recipes",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benBlueKeller/reactionary_food_bytes.git"
@@ -37,11 +25,6 @@
   "bugs": {
     "url": "https://github.com/benBlueKeller/reactionary_food_bytes/issues"
   },
-  "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme",
-  "devDependencies": {
-    "babel-eslint": "^7.0.0",
-    "eslint": "^3.8.1",
-    "concurrently": "^3.1.0"
->>>>>>> origin/created-appIntegration
+  "homepage": "https://github.com/benBlueKeller/reactionary_food_bytes#readme"
   }
 }

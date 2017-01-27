@@ -1,17 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import Header from  './header.js';
 import Item from './item.js';
 import SearchForm from './search-form.js';
 
-export default class Cart extends Component {
+class Cart extends Component {
   static propTypes = {
     onItemAdd: PropTypes.func.isRequired,
-    onFinish: PropTypes.func
+    onFinish: PropTypes.func,
+    food: PropTypes.array.isRequired
   };
 
   state = {
-    food: []
+    food: this.props.food
   };
 
   addItem = (item) => {
@@ -58,3 +60,11 @@ export default class Cart extends Component {
     );
   }
 }
+
+const mapStateToFood = state => (
+  {
+    food: state.cart.shopList.food
+  }
+)
+
+export default connect(mapStateToFood)(Cart);

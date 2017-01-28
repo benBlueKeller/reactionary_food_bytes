@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import '../app.css';
+import '../../app.css';
 
-import * as PantryActions from './actions/pantry.js';
-import Header from './components/header.js';
-import Item from './components/item.js';
-import TextForm from './components/text-form.js';
-import SearchForm from './components/search-form.js';
-import AddItemForm from './components/add-item-form.js';
-import Recipe from './components/recipe.js';
-import Cart from './components/cart.js';
+import * as PantryActions from '../actions/pantry.js';
+import Header from '../components/header.js';
+import Item from '../components/item.js';
+import TextForm from '../components/text-form.js';
+import SearchForm from '../components/search-form.js';
+import AddItemForm from '../components/add-item-form.js';
+import Recipe from '../components/recipe.js';
+import Cart from '../components/cart.js';
 
 
 function foodIsEqual(f, o) {

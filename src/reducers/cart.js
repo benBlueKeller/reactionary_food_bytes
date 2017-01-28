@@ -5,7 +5,7 @@ import * as CartActionTypes from '../actionTypes/cart';
 
 function shopList(state = cart.shopList, action) {	
 	switch(action.type){
-	    case CartActionTypes.shopListADD_ITEM: {
+	    case CartActionTypes.shopList_ADD_ITEM: {
 			const addItemList = [...state.food,   {
 		        name: action.name,
 		        ndbno: action.ndbno,
@@ -17,7 +17,7 @@ function shopList(state = cart.shopList, action) {
 		 	};
 	 	}
 
-	    case CartActionTypes.shopListREMOVE_ITEM: {
+	    case CartActionTypes.shopList_REMOVE_ITEM: {
 			const removeItemList = [
 				...state.food.slice(0, action.index),
 				...state.food.slice(action.index + 1)
@@ -28,7 +28,7 @@ function shopList(state = cart.shopList, action) {
 			};
 		}
 
-	    case CartActionTypes.shopListCHANGE_ITEM_QTY: {
+	    case CartActionTypes.shopList_CHANGE_ITEM_QTY: {
 			const updateItemList = state.food.map((item, index) => {
 				if(index === action.index){
 					return {
@@ -51,7 +51,7 @@ function shopList(state = cart.shopList, action) {
 
 function basket(state = cart.basket, action) {	
 	switch(action.type){
-	    case CartActionTypes.basketADD_ITEM: {
+	    case CartActionTypes.basket_ADD_ITEM: {
 			const addItemList = [...state.food,   {
 		        name: action.name,
 		        ndbno: action.ndbno,
@@ -63,7 +63,7 @@ function basket(state = cart.basket, action) {
 		 	};
 	 	}
 
-	    case CartActionTypes.basketREMOVE_ITEM: {
+	    case CartActionTypes.basket_REMOVE_ITEM: {
 			const removeItemList = [
 				...state.food.slice(0, action.index),
 				...state.food.slice(action.index + 1)
@@ -74,7 +74,7 @@ function basket(state = cart.basket, action) {
 			};
 		}
 
-	    case CartActionTypes.basketCHANGE_ITEM_QTY: {
+	    case CartActionTypes.basket_CHANGE_ITEM_QTY: {
 			const updateItemList = state.food.map((item, index) => {
 				if(index === action.index){
 					return {

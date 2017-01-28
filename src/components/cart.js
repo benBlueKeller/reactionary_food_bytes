@@ -1,19 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import * as CartActions from '../actions/cart.js';
+import { addItem } from '../actions/pantry.js';
 import Header from  './header.js';
 import Item from './item.js';
 import SearchForm from './search-form.js';
 
 class Cart extends Component {
   static propTypes = {
-    onItemAdd: PropTypes.func.isRequired,
-    onFinish: PropTypes.func,
     food: PropTypes.array.isRequired
-  };
-
-  state = {
-    food: this.props.food
   };
 
   addItem = (item) => {
@@ -32,30 +29,40 @@ class Cart extends Component {
   };
 
   createDateString = (index) => {
-    var d = this.state.food[index].expDate || false;
+    var d = this.props.food[index].expDate || false;
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'];
     return d ? months[d.getMonth()] + ' ' + d.getDate() : 'who kno'
   };
 
-  onFinish = () => {this.props.onFinish(this.state.food)};
-
   render() {
+    const { dispatch, food } = this.props;
+    const shopListAddItem = bindActionCreators(CartActions.shopListAddItem, dispatch);
+    const shopListRemoveItem = bindActionCreators(CartActions.shopListRemoveItem, dispatch);
+    const shopListChangeItemQty = bindActionCreators(CartActions.shopListChangeItemQty, dispatch);
+    const addItemToPantry = bindActionCreators(addItem, dispatch);
+
+    const addAllToPantry = () => {
+      food.map((item, index) => {
+        addItemToPantry(item);
+      });
+    }
+
     return (
       <div className="tile">
-        <Header title="Cart" action={this.onFinish} />
+        <Header title="Cart" action={addAllToPantry} />
         <div className="items">
-            {this.state.food.map(function(item, index) {
+            {food.map(function(item, index) {
               return(
                 // TODO:: as you think about data structures, find better keys
                 <Item name={item.name} 
-                onRemove={function() {this.props.onItemAdd(item)}.bind(this)} 
+                onRemove={function() {shopListRemoveItem(index)}} 
                 onChange={function(delta) {this.changeExpDate(index, delta)}.bind(this)} 
                 qty={this.createDateString(index)}
                 key={item.ndbno}/>
                 );
             }.bind(this))}
           </div>
-        <SearchForm onSelect={this.addItem} btnText="Search" />
+        <SearchForm onSelect={shopListAddItem} btnText="Search" />
       </div>
     );
   }

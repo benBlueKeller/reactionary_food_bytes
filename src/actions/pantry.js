@@ -1,10 +1,16 @@
 import * as PantryActionTypes from '../actionTypes/pantry.js';
 
-export const addItem = (name, nbdno = "") => {
+export const addItem = item => {
+	if(typeof item === 'string') {
+		return {
+			type: PantryActionTypes.ADD_ITEM,
+			name: item,
+			ndbno: undefined
+		}
+	}
 	return {
 		type: PantryActionTypes.ADD_ITEM,
-		name,
-		nbdno
+		...item
 	}
 };
 

@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Reducer from './reducers/index';
 
-import NavLink from './components/NavLink'
-import FoodBytes from './app.jsx';
+import NavLink from './components/NavLink';
 
 const store = createStore(
   Reducer,

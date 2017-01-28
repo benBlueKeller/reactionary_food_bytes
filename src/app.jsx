@@ -184,19 +184,19 @@ class Pantry extends Component {
         <div className="tile">
           <Header title={this.props.title} stopwatch={false} />
           <div className="items">
-            {this.state.food.map(function(item, index) {
+            {food.map(function(item, index) {
   						return(
   							// TODO:: as you think about data structures, find better keys
   							<Item name={item.name} 
                 qty={item.qty}
-                onChange={function(delta) {this.onItemQtyChange(index, delta)}.bind(this)}
-                onRemove={function() {this.onItemRemove(index)}.bind(this)} 
+                onChange={function(delta) {changeItemQty(index, delta)}.bind(this)}
+                onRemove={function() {removeItem(index)}.bind(this)} 
                 key={typeof item.ndbno !== "undefined" ? item.ndbno : index}/>
   							);
   					}.bind(this))}
   				</div>
-  				<AddItemForm onAdd={this.onItemAdd} />
-          <SearchForm onSelect={this.onItemAdd} />
+  				<AddItemForm onAdd={addItem} />
+          <SearchForm onSelect={addItem} />
         </div>
         {this.state.recipes.map(function(recipe, index) {
           console.log(this.state.recipes[index]);
@@ -205,7 +205,7 @@ class Pantry extends Component {
                           methods={this.recipeMethods(recipe)} />)
         }.bind(this))}
         <TextForm onSubmit={this.addRecipe} btnText={"add Recipe"} />
-        <Cart onItemAdd={this.onItemAdd} onFinish={this.mapItemsToAdd} />
+        <Cart onItemAdd={addItem} onFinish={this.mapItemsToAdd} />
       </div>
 		);
 	}

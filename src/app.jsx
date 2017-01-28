@@ -1,9 +1,11 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import '../app.css';
 
+import * as PantryActions from './actions/pantry.js';
 import Header from './components/header.js';
 import Item from './components/item.js';
 import TextForm from './components/text-form.js';
@@ -89,12 +91,7 @@ class Pantry extends Component {
       });
       this.setState(this.state);
     } else if (typeof item === "object") {
-      this.state.food.push({
-        name: item.name,
-        ndbno: item.ndbno,
-        qty: 13
-      });
-      this.setState(this.state);
+      console.warn("BEN, \n only string accepted");
     } else {
       console.warn("item passed to OnItemAdd neither string nor object. type is " + typeof item + "\nItem is " + item);
     }
@@ -177,6 +174,11 @@ class Pantry extends Component {
   };
 
   render() {
+    const { dispatch, food } = this.props;
+    const addItem = bindActionCreators(PantryActions.addItem, dispatch);
+    const removeItem = bindActionCreators(PantryActions.removeItem, dispatch);
+    const changeItemQty = bindActionCreators(PantryActions.changeItemQty, dispatch);
+
     return(
       <div>
         <div className="tile">

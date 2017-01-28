@@ -13,10 +13,11 @@
     "redux": "^3.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm run api-server\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "api-server": "http-server ../api -p 3030"
   },
   "description": "a react program for keeping track of food in the pantry and possible recipes",
   "repository": {

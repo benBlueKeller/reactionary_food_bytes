@@ -11,7 +11,7 @@ import Item from '../components/item.js';
 import TextForm from '../components/text-form.js';
 import SearchForm from '../components/search-form.js';
 import AddItemForm from '../components/add-item-form.js';
-import Recipe from '../components/recipe.js';
+import Recipe from '../containers/recipes.js';
 import Cart from '../containers/cart.js';
 
 

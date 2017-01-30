@@ -20,7 +20,7 @@ export default class Base extends Component {
 						<ul className="main-nav">
 							<li><NavLink to="/">Home</NavLink></li>
 							<li><NavLink to="/cart">Cart</NavLink></li>
-							<li><NavLink to="/recipe">Recipe</NavLink></li>
+							<li><NavLink to="/recipes">Recipes</NavLink></li>
 						</ul>       
 					</header>
 					{ this.props.children }

@@ -14,7 +14,7 @@ class App extends Component {
         <Route component={Base}>
 	        <Route path="/" component={Pantry} />
 	        <Route path="/cart" component={Cart} />
-	        <Route path="/cart" component={Recipe} />
+	        <Route path="/recipes" component={Recipe} />
         </Route>
       </Router>
     );

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as RecipeActions from '../actions/recipes.js';
-import Header from  './header.js';
-import Item from './item.js';
-import SearchForm from './search-form.js';
+import Header from  '../components/header.js';
+import Item from '../components/item.js';
+import SearchForm from '../components/search-form.js';
 
 class Recipe extends Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class Recipe extends Component {
             <Item name={item.name} 
             qty={item.qty}
             onChange={function(delta) {changeItemQty(index, delta, selected)}}
-            onRemove={function(index) {removeItem(index, selected)}} 
+            onRemove={function() {removeItem(index, selected)}} 
             key={typeof item.ndbno !== "undefined" ? item.ndbno : index} /> );
         })}
       </div>

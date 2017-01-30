@@ -38,7 +38,7 @@ const initialState = {
             ndbno: "45086905",
             qty: 402
           },
-        ],
+        ]
       }
     ],
     selected: 0

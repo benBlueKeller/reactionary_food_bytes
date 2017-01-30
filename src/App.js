@@ -5,7 +5,7 @@ import './App.css';
 import Base from './base';
 import Pantry from './containers/pantry';
 import Cart from './containers/cart';
-import Recipe from './containers/recipe';
+import Recipe from './containers/recipes';
 
 class App extends Component {
   render() {

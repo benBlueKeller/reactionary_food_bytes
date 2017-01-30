@@ -22,9 +22,9 @@ class Cart extends Component {
   };
 
   changeExpDate = (index, delta) => {
-    var d = this.state.food[index].expDate || new Date();
+    var d = this.props.food[index].expDate || new Date();
     d.setDate(d.getDate() + delta);
-    this.setState(this.state.food[index].expDate = d);
+    this.setState(this.props.food[index].expDate = d);
     //console.log(this.state.food[index])
   };
 

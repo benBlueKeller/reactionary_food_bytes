@@ -12,7 +12,7 @@ import TextForm from '../components/text-form.js';
 import SearchForm from '../components/search-form.js';
 import AddItemForm from '../components/add-item-form.js';
 import Recipe from '../components/recipe.js';
-import Cart from '../components/cart.js';
+import Cart from '../containers/cart.js';
 
 
 function foodIsEqual(f, o) {
@@ -205,7 +205,7 @@ class Pantry extends Component {
                           methods={this.recipeMethods(recipe)} />)
         }.bind(this))}
         <TextForm onSubmit={this.addRecipe} btnText={"add Recipe"} />
-        <Cart onItemAdd={addItem} onFinish={this.mapItemsToAdd} />
+        <Cart />
       </div>
 		);
 	}

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 
 import * as CartActions from '../actions/cart.js';
 import { addItem } from '../actions/pantry.js';
-import Header from  './header.js';
-import Item from './item.js';
-import SearchForm from './search-form.js';
+import Header from  '../components/header.js';
+import Item from '../components/item.js';
+import SearchForm from '../components/search-form.js';
 
 class Cart extends Component {
   static propTypes = {

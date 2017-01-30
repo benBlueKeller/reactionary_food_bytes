@@ -201,7 +201,7 @@ class Pantry extends Component {
         {this.state.recipes.map(function(recipe, index) {
           console.log(this.state.recipes[index]);
           return (<Recipe key={recipe.name || this.state.recipes.length + 1} 
-                          food={recipe.food}
+                          //food={recipe.food}
                           methods={this.recipeMethods(recipe)} />)
         }.bind(this))}
         <TextForm onSubmit={this.addRecipe} btnText={"add Recipe"} />

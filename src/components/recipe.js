@@ -1,32 +1,44 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import * as RecipeActions from '../actions/recipes.js';
 import Header from  './header.js';
 import Item from './item.js';
 import SearchForm from './search-form.js';
 
-const Recipe = (props) => {
-  return (
-    <div className="tile">
-    <Header title="Recipe" action={props.methods.recipeItemRemove}/>
-    <div className="items">
-      {props.food.map(function(item, index) {
-        return (
-          // TODO:: as you think about data structures, find better keys
-          <Item name={item.name} 
-          qty={item.qty}
-          onChange={function(delta) {props.methods.onItemQtyChange(index, delta)}}
-          onRemove={function(index) {props.methods.recipeItemRemove(index)}} 
-          key={typeof item.ndbno !== "undefined" ? item.ndbno : index} /> );
-      })}
-    </div>
-    <SearchForm onSelect={props.methods.addItem} />
-    </div>
-  );
+class Recipe extends Component {
+  render() {
+    const { dispatch, food, selected } = this.props;
+    const addItem = bindActionCreators(RecipeActions.addItem, dispatch);
+    const removeItem = bindActionCreators(RecipeActions.removeItem, dispatch);
+    const changeItemQty = bindActionCreators(RecipeActions.changeItemQty, dispatch);
+
+    return (
+      <div className="tile">
+      <Header title="Recipe" />
+      <div className="items">
+        {food.map(function(item, index) {
+          return (
+            // TODO:: as you think about data structures, find better keys
+            <Item name={item.name} 
+            qty={item.qty}
+            onChange={function(delta) {changeItemQty(index, delta, selected)}}
+            onRemove={function(index) {removeItem(index, selected)}} 
+            key={typeof item.ndbno !== "undefined" ? item.ndbno : index} /> );
+        })}
+      </div>
+      <SearchForm onSelect={function(item) {addItem(item, selected)}} />
+      </div>
+    );
+  }
 }
 
-Recipe.propTypes = {
-  food: PropTypes.array.isRequired,
-  methods: PropTypes.object.isRequired,
-}
+const mapStateToProps = state => (
+  {
+    selected: state.recipes.selected,
+    food: state.recipes.mine[state.recipes.selected].food
+  }
+)
 
-export default Recipe;
+export default connect(mapStateToProps)(Recipe);

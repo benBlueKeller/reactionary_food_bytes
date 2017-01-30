@@ -1,10 +1,16 @@
-import * as RecipeActionTypes from '../actionTypes/pantry.js';
+import * as RecipeActionTypes from '../actionTypes/recipes.js';
 
-export const addItem = (name, nbdno = "", recipeIndex) => {
+export const addItem = (item, recipeIndex) => {
+	if(typeof item === 'string') {
+		return {
+			type: RecipeActionTypes.ADD_ITEM,
+			name: item,
+			recipeIndex
+		}
+	}
 	return {
 		type: RecipeActionTypes.ADD_ITEM,
-		name,
-		nbdno,
+		...item,
 		recipeIndex
 	}
 };

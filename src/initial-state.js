@@ -41,7 +41,7 @@ const initialState = {
         ],
       }
     ],
-    selected: -1
+    selected: 0
   }
 }
 

@@ -8,6 +8,11 @@ import Item from './item.js';
 import SearchForm from './search-form.js';
 
 class Recipe extends Component {
+  static propTypes = {
+    food: PropTypes.array.isRequired,
+    selected: PropTypes.number.isRequired
+  }
+
   render() {
     const { dispatch, food, selected } = this.props;
     const addItem = bindActionCreators(RecipeActions.addItem, dispatch);

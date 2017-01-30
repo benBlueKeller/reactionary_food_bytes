@@ -5,6 +5,7 @@ import './App.css';
 import Base from './base';
 import Pantry from './containers/pantry';
 import Cart from './containers/cart';
+import Recipe from './containers/recipe';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
         <Route component={Base}>
 	        <Route path="/" component={Pantry} />
 	        <Route path="/cart" component={Cart} />
+	        <Route path="/cart" component={Recipe} />
         </Route>
       </Router>
     );

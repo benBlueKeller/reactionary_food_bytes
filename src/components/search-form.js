@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+import { getJSON } from '../methods/cors.js';
 import TextForm from './text-form.js';
 import Item from './item.js';
 
@@ -56,7 +57,8 @@ export default class SearchForm extends Component {
       }
       this.setState(this.state);
     }.bind(this);
-    AJAX(url, showResults);    
+    //AJAX(url, showResults);    
+    getJSON(url, showResults);
   };
 
   onSelect = (index) => {

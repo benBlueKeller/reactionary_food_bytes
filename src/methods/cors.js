@@ -26,7 +26,7 @@ function createCORSRequest(method, url) {
   return xhr;
 }
 
-function AJAX(url, callback, err = () => {console.log("ERR in AJAX")}) {
+export function AJAX(url, callback, err = () => {console.log("ERR in AJAX")}) {
   var onLoad = function() {
     return callback(JSON.parse(this.responseText));
   };
@@ -41,7 +41,9 @@ function AJAX(url, callback, err = () => {console.log("ERR in AJAX")}) {
 export function getJSON(url, callback, err) {
 	var xhr = createCORSRequest('GET', url);
 	if (xhr) {
-		xhr.onload = () => {callback(JSON.parse(xhr.responseText))};
+		xhr.onload = () => {
+			callback(JSON.parse(xhr.responseText));
+		};
 		xhr.onerror = err ? err : () => {console.log("ERR in CORS")};
 		xhr.send();
 	} else {

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import { getJSON } from '../methods/cors.js';
+import { getKeys } from '../methods/get-api.js';
 import TextForm from './text-form.js';
 import Item from './item.js';
 
@@ -15,7 +16,7 @@ var AJAX = (url, callback) => {
 }
 
 var createItemObj = (ndbno) => {
-  return AJAX(window.url.food(ndbno), function(json) {
+  return getJSON('http://api.nal.usda.gov/ndb/reports/?ndbno=' + ndbno + '&type=f&format=json&api_key=' + window.apiKeys.gov, function(json) {
     //console.log(json);
     var item = json.report.food;
     return {
@@ -41,13 +42,14 @@ export default class SearchForm extends Component {
     //var newWindow = window.open(url, "searchJSON");
     var showResults = function(resJSON) {
       this.setState(this.state.results = []);
+      console.log(resJSON);
       try {
         for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
           this.state.results.push({
             name: resJSON.list.item[i].name,
             ndbno: resJSON.list.item[i].ndbno
           });
-          console.log(createItemObj(this.state.ndbno));
+          //console.log(createItemObj(this.state.ndbno));
         }
       } catch(e) {
         this.state.results.push({
@@ -66,6 +68,10 @@ export default class SearchForm extends Component {
   };
 
   render() {
+    if(!window.apiKeys) {
+      getKeys((keys) => {window.apiKeys = keys})
+    }
+
     return (
       <div>
         <TextForm onSubmit={this.sendReq} btnText="Search" />

@@ -39,3 +39,11 @@ export const selectRecipe = recipeIndex => {
 		recipeIndex
 	}
 };
+
+export const addRecipe = (name, food = []) => {
+	return {
+		type: RecipeActionTypes.ADD_RECIPE,
+		name,
+		food
+	}
+}

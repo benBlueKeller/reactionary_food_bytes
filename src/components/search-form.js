@@ -65,6 +65,7 @@ export default class SearchForm extends Component {
 
   onSelect = (index) => {
     this.props.onSelect(this.state.results[index]);
+    this.setState(this.state.results = []);
   };
 
   constructor() {

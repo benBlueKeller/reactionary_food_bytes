@@ -7,6 +7,7 @@ import RecipeMenu from './recipes-menu.js';
 import Header from  '../components/header.js';
 import Item from '../components/item.js';
 import SearchForm from '../components/search-form.js';
+import TextForm from '../components/text-form.js';
 
 class Recipe extends Component {
   static propTypes = {
@@ -22,6 +23,7 @@ class Recipe extends Component {
     const addItem = bindActionCreators(RecipeActions.addItem, dispatch);
     const removeItem = bindActionCreators(RecipeActions.removeItem, dispatch);
     const changeItemQty = bindActionCreators(RecipeActions.changeItemQty, dispatch);
+    const addRecipe = bindActionCreators(RecipeActions.addRecipe, dispatch);
 
     return (
       <div className="recipes">
@@ -40,6 +42,7 @@ class Recipe extends Component {
             })}
           </div>
           <SearchForm onSelect={function(item) {addItem(item, selected)}} />
+          <TextForm onSubmit={addRecipe} btnText={"add Recipe"} />
         </div>
       </div>
     );

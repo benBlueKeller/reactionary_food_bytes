@@ -75,6 +75,19 @@ export default function RecipeReducer(state=recipes, action) {
 			}
 		}
 
+		case RecipeActionTypes.ADD_RECIPE: {
+			return {
+				...state,
+				mine: [
+					...state.mine,
+					{
+						name: action.name,
+						food: action.food
+					}
+				]
+			}
+		}
+
 		default:
 			return state;
 	}

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import './recipes-menu.css';
 import { selectRecipe } from '../actions/recipes.js';
 
 class RecipeMenu extends Component {
@@ -14,7 +15,8 @@ class RecipeMenu extends Component {
 		const select = bindActionCreators(selectRecipe, dispatch);
 
 		return (
-			<ul className="recipe-menu">
+			<ul className="recipes-menu">
+				<div className="show-menu" ></div>
 				{recipeNames.map((recipeName, index) => {
 					return <li onClick={() => {select(index)}}>{recipeName}</li>
 				})}

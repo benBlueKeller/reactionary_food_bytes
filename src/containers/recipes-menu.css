@@ -1,0 +1,34 @@
+.recipes-menu {
+	background-color: #032456;
+	position: fixed;
+	right: 14px;
+	top: 24px;
+	max-height: 120px;
+	overflow-y: auto;
+	max-width: 180px;
+	overflow-x: hidden;
+}
+
+@media print, screen and (max-width: 1200px) {
+	.recipes-menu {
+		visibility: hidden;
+	}
+
+	.show-menu {
+		visibility: visible;
+		position: absolute;
+		right: 4px;
+		background-color: #f9b437;
+		width: 12px;
+		height: 5px;
+		box-shadow: 1px 13px 4px #126986;
+	}
+
+	.recipes-menu:hover {
+		visibility: visible;
+	}
+
+	.recipes-menu:hover .show-menu {
+		visibility: hidden;
+	}
+}

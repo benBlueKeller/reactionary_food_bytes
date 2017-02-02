@@ -67,10 +67,14 @@ export default class SearchForm extends Component {
     this.props.onSelect(this.state.results[index]);
   };
 
-  render() {
+  constructor() {
+    super();
     if(!window.apiKeys) {
       getKeys((keys) => {window.apiKeys = keys})
     }
+  }
+
+  render() {
 
     return (
       <div>

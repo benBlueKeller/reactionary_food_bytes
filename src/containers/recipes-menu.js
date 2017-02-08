@@ -18,7 +18,7 @@ class RecipeMenu extends Component {
 			<ul className="recipes-menu">
 				<div className="show-menu" ></div>
 				{recipeNames.map((recipeName, index) => {
-					return <li onClick={() => {select(index)}}>{recipeName}</li>
+					return <li key={index} onClick={() => {select(index)}}>{recipeName}</li>
 				})}
 			</ul>
 		)

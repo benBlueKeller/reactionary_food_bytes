@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
-import { getJSON } from '../methods/cors.js';
+//import { getJSON } from '../methods/cors.js';
 import { getKeys } from '../methods/get-api.js';
 import TextForm from './text-form.js';
 import Item from './item.js';
 
 var AJAX = (url, callback) => {
+  console.log(url);
   var onLoad = function() {
     return callback(JSON.parse(this.responseText));
   };
@@ -15,18 +16,21 @@ var AJAX = (url, callback) => {
   req.send();
 }
 
-var createItemObj = (ndbno) => {
-  return getJSON('http://api.nal.usda.gov/ndb/reports/?ndbno=' + ndbno + '&type=f&format=json&api_key=' + window.apiKeys.gov, function(json) {
+var getUSDAReport = (ndbno, callback) => {
+  AJAX('http://api.nal.usda.gov/ndb/reports/?ndbno=' + ndbno + '&type=f&format=json&api_key=' + window.apiKeys.gov, function(json) {
     //console.log(json);
     var item = json.report.food;
-    return {
+    callback({
     name: item.name,
-    ndbno: ndbno,
+    ndbno: item.ndbno,
+    foodGroup: item.fg,
+    nutrients: item.nutrients,
     serving: item.nutrients[0].qty,
     label: item.nutrients[0].label
-    }
+    });
   });
 };
+
 
 export default class SearchForm extends Component {
   static propTypes = {
@@ -42,7 +46,6 @@ export default class SearchForm extends Component {
     //var newWindow = window.open(url, "searchJSON");
     var showResults = function(resJSON) {
       this.setState(this.state.results = []);
-      console.log(resJSON);
       try {
         for (var i = resJSON.list.item.length - 1; i >= 0; i--) {
           this.state.results.push({
@@ -60,7 +63,7 @@ export default class SearchForm extends Component {
       this.setState(this.state);
     }.bind(this);
     //AJAX(url, showResults);    
-    getJSON(url, showResults);
+    AJAX(url, showResults);
   };
 
   onSelect = (index) => {
@@ -71,7 +74,8 @@ export default class SearchForm extends Component {
   constructor() {
     super();
     if(!window.apiKeys) {
-      getKeys((keys) => {window.apiKeys = keys})
+      getKeys((keys) => {window.apiKeys = keys});
+      getUSDAReport("11298", report => {console.log(report)})
     }
   }
 

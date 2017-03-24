@@ -1,19 +1,14 @@
 'use strict';
 
-var mongoose = require('mongoose');
-
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
 var FoodSchema = new Schema({
 	name: String,
 	nddno: String,
-	qty: Number
+	qty: Number,
+	location: String,
+	sub_location: String
 });
 
-var PantrySchema = new Schema({
-	food: [FoodSchema]
-});
 
-var Pantry = mongoose.model("Pantry", PantrySchema);
-
-module.exports.Pantry = Pantry;
+module.exports.Food  = mongoose.model("Food", FoodSchema);

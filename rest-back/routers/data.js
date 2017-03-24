@@ -44,4 +44,13 @@ router.get("/:fID", function(req, res, next){
 	res.json(req.item);
 });
 
+//PUT /data/:id
+//Edit a food item
+router.put("/:fID", function(req, res, next) {
+	req.item.update(req.body, function(err, result){
+		if(err) return next(err);
+		res.json(result);
+	});
+})
+
 module.exports = router;

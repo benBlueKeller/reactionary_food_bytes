@@ -2,6 +2,7 @@
 
 var express = require("express");
 var app = express();
+var dataRoute = require("./routers/data");
 
 var jsonParser = require("body-parser").json;
 var logger = require("morgan");
@@ -32,6 +33,8 @@ app.use(function(req, res, next){
 	}
 	next();
 });
+
+app.use('/data', dataRoute);
 
 
 

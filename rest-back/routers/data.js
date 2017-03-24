@@ -38,4 +38,10 @@ router.post("/", function(req, res, next){
 	});
 });
 
+// GET /data/:id
+// Route for specific food
+router.get("/:fID", function(req, res, next){
+	res.json(req.item);
+});
+
 module.exports = router;

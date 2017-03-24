@@ -51,6 +51,16 @@ router.put("/:fID", function(req, res, next) {
 		if(err) return next(err);
 		res.json(result);
 	});
-})
+});
+
+
+// DELETE /data/:fID
+// Delete a specific food item
+router.delete("/:fID", function(req, res, next){
+	req.item.remove(function(err){
+		if(err) return next(err);
+		res.status(202);
+	});
+});
 
 module.exports = router;

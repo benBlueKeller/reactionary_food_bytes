@@ -60,6 +60,8 @@ router.delete("/:fID", function(req, res, next){
 	req.item.remove(function(err){
 		if(err) return next(err);
 		res.status(202);
+		res.json({ deleted: req.item});
+		next();
 	});
 });
 

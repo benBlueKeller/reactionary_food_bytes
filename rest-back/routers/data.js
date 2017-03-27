@@ -27,7 +27,7 @@ router.get("/", function(req, res, next){
 				});
 });
 
-// POST /food
+// POST /data
 // Route for creating food items
 router.post("/", function(req, res, next){
 	var item = new Food(req.body);

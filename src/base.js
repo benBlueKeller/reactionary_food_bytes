@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore , applyMiddleware } from 'redux';
 import Reducer from './reducers/index';
+
+import dataLogger from './middleware/data-logger.js';
 
 import NavLink from './components/NavLink';
 
 const store = createStore(
   Reducer,
-  window.devToolsExtension && window.devToolsExtension()
+  window.devToolsExtension && window.devToolsExtension(),
+  applyMiddleware(dataLogger)
 );
 
 export default class Base extends Component {

@@ -30,6 +30,7 @@ router.get("/", function(req, res, next){
 // POST /data
 // Route for creating food items
 router.post("/", function(req, res, next){
+	console.log(req.body);
 	var item = new Food(req.body);
 	item.save(function(err, item){
 		if(err) return next(err);

@@ -2,10 +2,11 @@
 
 var express = require("express");
 var app = express();
-var dataRoute = require("./routers/data");
 
 var jsonParser = require("body-parser").json;
 var logger = require("morgan");
+
+var dataRoute = require("./routers/data");
 
 app.use(logger("dev"));
 app.use(jsonParser());

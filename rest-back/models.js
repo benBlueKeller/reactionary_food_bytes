@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
  */
 var FoodSchema = new Schema({
 	name: String,
-	nddno: String,
+	ndbno: String,
 	qty: Number,
 	location: String,
 	sub_location: String

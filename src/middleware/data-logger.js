@@ -10,17 +10,29 @@ function AJAX(url, type = "GET", callback, body) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", onLoad);
   req.open(type, url);
-  body ? req.send(JSON.stringify(body)) : req.send();
+  if (body) req.setRequestHeader("Content-Type", "application/json");
+
+  body 
+  ? 
+  req.send(JSON.stringify(body))
+  : 
+  req.send();
 }
 
 const dataLogger = store => next => action => {
-	console.log(action);
 
 	if(action.type.includes('ADD_ITEM')) {
+		var body = {
+			...action,
+			location: action.type.slice(0, action.type.indexOf("/"))
+		}
+		console.log(body);
 		AJAX(dataRoot + '/', 'POST', (json) => {
 			console.log(json);
-		}, action)
+		}, body);
 	}
+
+	next(action);
 }
 
 export default dataLogger;

@@ -1,6 +1,6 @@
 'use strict'
 
-export function addId (food, action) {
+export function addID (food, action) {
 	for (var i = food.length - 1; i >= 0; i--) {
 		if(action.ndbno) {
 			if(food[i].ndbno === action.ndbno) {

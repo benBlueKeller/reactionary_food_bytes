@@ -1,4 +1,5 @@
 import * as PantryActionTypes from '../actionTypes/pantry';
+import { addID } from '../methods/switch-funcs.js';
 import { pantry } from '../initial-state';
 
 export default function Pantry(state=pantry, action) {	
@@ -13,6 +14,13 @@ export default function Pantry(state=pantry, action) {
 				...state,
 				food: addItemList
 		 	};
+		}
+
+		case PantryActionTypes.ADD_ID: {
+			return {
+				...state,
+				food: addID(state.food, action)
+			}
 		}
 
 		case PantryActionTypes.REMOVE_ITEM: {

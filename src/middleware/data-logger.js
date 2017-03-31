@@ -1,5 +1,6 @@
 'use strict'
 
+
 let dataRoot = 'http://127.0.0.1:3040/data';
 
 function AJAX(url, type = "GET", callback, body) {
@@ -21,15 +22,25 @@ function AJAX(url, type = "GET", callback, body) {
 
 const dataLogger = store => next => action => {
 
+	var body = {
+		...action,
+		location: action.type.slice(0, action.type.indexOf("/"))
+	}
+
 	if(action.type.includes('ADD_ITEM')) {
-		var body = {
-			...action,
-			location: action.type.slice(0, action.type.indexOf("/"))
-		}
 		console.log(body);
-		AJAX(dataRoot + '/', 'POST', (json) => {
-			console.log(json);
-		}, body);
+		AJAX(dataRoot + '/', 
+			'POST', 
+			(json) => {
+				console.log(json);
+				store.dispatch({
+					type: body.location + '/ADD_ID',
+					ndbno: action.ndbno,
+					name: action.name,
+					id: json._id
+				});
+			}, 
+			body);
 	}
 
 	next(action);

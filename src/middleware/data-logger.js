@@ -21,7 +21,7 @@ function AJAX(url, type = "GET", callback, body) {
 }
 
 const dataLogger = store => next => action => {
-
+	console.log(store.getState());
 	var body = {
 		...action,
 		location: action.type.slice(0, action.type.indexOf("/"))

@@ -27,6 +27,21 @@ const dataLogger = store => next => action => {
 		location: action.type.slice(0, action.type.indexOf("/"))
 	}
 
+	/**
+	 * location returns the store object associated with the string body.location
+	 * @return {Object} store pantry||cart||recipes
+	 */
+	function location () {
+		switch(body.location) {
+			case 'pantry':
+				return store.getState().pantry;
+			case 'cart':
+				return store.getState().cart;
+			case 'recipes':
+				return store.getState().recipes;
+		}
+	}
+
 	if(action.type.includes('ADD_ITEM')) {
 		console.log(body);
 		AJAX(dataRoot + '/', 
@@ -41,6 +56,20 @@ const dataLogger = store => next => action => {
 				});
 			}, 
 			body);
+	}
+
+	if(action.type.includes('CHANGE_ITEM_QTY')) {
+		console.log(action.delta);
+		var newQty = location().food[action.index].qty + action.delta;
+		AJAX(dataRoot + '/' + location().food[action.index].id,
+			'PUT',
+			(json) => {
+				if(json.error) {
+					console.error("data/CHANGE_ITEM_QTY returned an error\n", json.error.message );
+				}
+				console.log(json);
+			},
+			{ qty: newQty });
 	}
 
 	next(action);

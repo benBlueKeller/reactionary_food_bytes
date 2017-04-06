@@ -60,17 +60,23 @@ const dataLogger = store => next => action => {
 	}
 
 	if(action.type.includes('CHANGE_ITEM_QTY')) {
-		console.log(action.delta);
-		var newQty = location().food[action.index].qty + action.delta;
-		AJAX(dataRoot + '/' + location().food[action.index].id,
-			'PUT',
-			(json) => {
-				if(json.error) {
-					console.error("data/CHANGE_ITEM_QTY returned an error\n", json.error.message );
-				}
-				console.log(json);
-			},
-			{ qty: newQty });
+		if(location().food && action.id) {
+			var newQty;	 
+			for(let item of location().food) {
+				if(item.id === action.id) newQty = item.qty + action.delta;
+			}
+			AJAX(dataRoot + '/' + location().food[action.index].id,
+				'PUT',
+				(json) => {
+					if(json.error) {
+						console.error("data/CHANGE_ITEM_QTY returned an error\n", json.error.message );
+					}
+					console.log(json);
+				},
+				{ qty: newQty });
+		} else {
+			console.warn("insufficient data to log qty change \n location:", location(), '\naction id:', action.id);
+		}
 	}
 
 	next(action);

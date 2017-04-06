@@ -189,7 +189,7 @@ class Pantry extends Component {
   							// TODO:: as you think about data structures, find better keys
   							<Item name={item.name} 
                 qty={item.qty}
-                onChange={function(delta) {changeItemQty(index, delta)}.bind(this)}
+                onChange={function(delta) {changeItemQty(index, delta, item.id)}.bind(this)}
                 onRemove={function() {removeItem(index)}.bind(this)} 
                 key={typeof item.ndbno !== "undefined" ? item.ndbno : index}/>
   							);

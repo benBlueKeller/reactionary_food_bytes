@@ -30,6 +30,7 @@ const dataLogger = store => next => action => {
 	/**
 	 * location returns the store object associated with the string body.location
 	 * @return {Object} store pantry||cart||recipes
+	 * 
 	 */
 	function location () {
 		switch(body.location) {

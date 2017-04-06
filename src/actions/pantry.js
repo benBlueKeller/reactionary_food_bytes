@@ -21,10 +21,11 @@ export const removeItem = index => {
 	}
 };
 
-export const changeItemQty = (index, delta) => {
+export const changeItemQty = (index, delta, id) => {
 	return {
 		type: PantryActionTypes.CHANGE_ITEM_QTY,
 		index,
-		delta
+		delta,
+		id
 	}
 };

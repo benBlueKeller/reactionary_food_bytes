@@ -97,6 +97,16 @@ const dataLogger = store => next => action => {
 		}
 	}
 
+	if(action.type.includes('LOAD')) {
+		AJAX(
+			dataRoot,
+			'GET',
+			(json) => {
+				console.log(json);
+			}
+			);
+	}
+
 	next(action);
 }
 

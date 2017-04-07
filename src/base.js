@@ -14,6 +14,12 @@ const store = createStore(
 );
 
 export default class Base extends Component {
+	constructor() {
+		super();
+		//load data for app
+		store.dispatch({ type: 'LOAD' });
+	}
+
 	render() {
 		return (
 			<Provider store={store}>

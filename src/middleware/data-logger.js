@@ -102,10 +102,15 @@ const dataLogger = store => next => action => {
 				for(let doc of json) {
 					console.log(doc);
 					doc.id = doc._id;
-					store.dispatch({
+					if(!doc.location) AJAX(
+						dataRoot + "/" + doc.id,
+						'DELETE',
+						(json) => console.log(json.message)
+						)
+					else store.dispatch({
 						type: doc.location + "/ADD_ITEM",
 						...doc
-					})
+					});
 				}
 			}
 			);

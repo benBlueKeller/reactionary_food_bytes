@@ -190,7 +190,7 @@ class Pantry extends Component {
   							<Item name={item.name} 
                 qty={item.qty}
                 onChange={function(delta) {changeItemQty(index, delta, item.id)}.bind(this)}
-                onRemove={function() {removeItem(index)}.bind(this)} 
+                onRemove={function() {removeItem(index, item.id)}.bind(this)} 
                 key={typeof item.ndbno !== "undefined" ? item.ndbno : index}/>
   							);
   					}.bind(this))}

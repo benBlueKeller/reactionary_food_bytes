@@ -14,10 +14,11 @@ export const addItem = item => {
 	}
 };
 
-export const removeItem = index => {
+export const removeItem = (index, id) => {
 	return {
 		type: PantryActionTypes.REMOVE_ITEM,
-		index
+		index,
+		id
 	}
 };
 

@@ -44,8 +44,8 @@ const dataLogger = store => next => action => {
 	}
 
 	if(action.type.includes('ADD_ITEM')) {
-		console.log(body);
-		AJAX(dataRoot + '/', 
+		AJAX(
+			dataRoot + '/', 
 			'POST', 
 			(json) => {
 				console.log(json);
@@ -56,14 +56,22 @@ const dataLogger = store => next => action => {
 					id: json._id
 				});
 			}, 
-			body);
+			body
+			);
 	}
 
 	if(action.type.includes('REMOVE_ITEM')) {
 		if(action.id) {
 			AJAX(
-
+				dataRoot + '/' + action.id,
+				'DELETE',
+				(json) => {
+					if(json.error) console.error("REMOVE ERROR\n", json.error.message);
+					console.log(json.message);
+				}
 				);
+		} else {
+			console.warn("insufficient data to delete from server", '\naction id:', action.id);
 		}
 	}
 
@@ -74,7 +82,7 @@ const dataLogger = store => next => action => {
 				if(item.id === action.id) newQty = item.qty + action.delta;
 			}
 			AJAX(
-				dataRoot + '/' + location().food[action.index].id,
+				dataRoot + '/' + action.id,
 				'PUT',
 				(json) => {
 					if(json.error) {

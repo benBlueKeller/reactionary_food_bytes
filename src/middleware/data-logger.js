@@ -1,10 +1,7 @@
-'use strict'
-
 
 let dataRoot = 'http://127.0.0.1:3040/data';
 
 function AJAX(url, type = "GET", callback, body) {
-  console.log(url);
   var onLoad = function() {
     return callback(JSON.parse(this.responseText));
   };
@@ -32,8 +29,8 @@ const dataLogger = store => next => action => {
 	 * @return {Object} store pantry||cart||recipes
 	 * 
 	 */
-	function location () {
-		switch(body.location) {
+	function location (loc = body.location) {
+		switch(loc) {
 			case 'pantry':
 				return store.getState().pantry;
 			case 'cart':
@@ -44,7 +41,7 @@ const dataLogger = store => next => action => {
 	}
 
 	if(action.type.includes('ADD_ITEM')) {
-		AJAX(
+		if(!action.id) AJAX(
 			dataRoot + '/', 
 			'POST', 
 			(json) => {
@@ -102,7 +99,14 @@ const dataLogger = store => next => action => {
 			dataRoot,
 			'GET',
 			(json) => {
-				console.log(json);
+				for(let doc of json) {
+					console.log(doc);
+					doc.id = doc._id;
+					store.dispatch({
+						type: doc.location + "/ADD_ITEM",
+						...doc
+					})
+				}
 			}
 			);
 	}

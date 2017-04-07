@@ -102,7 +102,7 @@ const dataLogger = store => next => action => {
 				for(let doc of json) {
 					console.log(doc);
 					doc.id = doc._id;
-					if(!doc.location) AJAX(
+					if(!doc.location.includes('pantry')) AJAX(
 						dataRoot + "/" + doc.id,
 						'DELETE',
 						(json) => console.log(json.message)

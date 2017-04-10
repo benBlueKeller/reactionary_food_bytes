@@ -8,7 +8,7 @@ export default function Pantry(state=pantry, action) {
 			const addItemList = [...state.food,   {
 		        name: action.name,
 		        ndbno: action.ndbno,
-		        qty: 0,
+		        qty: action.qty || 0,
 		        id: action.id
 		    }];
 		    return {

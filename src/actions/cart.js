@@ -14,18 +14,20 @@ export const shopListAddItem = (item, nbdno) => {
 	}
 };
 
-export const shopListRemoveItem = index => {
+export const shopListRemoveItem = (index, id) => {
 	return {
 		type: CartActionTypes.shopList_REMOVE_ITEM,
-		index
+		index,
+		id
 	}
 };
 
-export const shopListChangeItemQty = (index, delta) => {
+export const shopListChangeItemQty = (index, delta, id) => {
 	return {
 		type: CartActionTypes.shopList_CHANGE_ITEM_QTY,
 		index,
-		delta
+		delta,
+		id
 	}
 };
 

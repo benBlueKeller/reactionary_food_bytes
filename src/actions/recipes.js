@@ -16,20 +16,22 @@ export const addItem = (item, recipeIndex) => {
 };
 
 
-export const removeItem = (index, recipeIndex) => {
+export const removeItem = (index, recipeIndex, id) => {
 	return {
 		type: RecipeActionTypes.REMOVE_ITEM,
 		index,
-		recipeIndex
+		recipeIndex,
+		id
 	}
 };
 
-export const changeItemQty = (index, delta, recipeIndex) => {
+export const changeItemQty = (index, delta, recipeIndex, id) => {
 	return {
 		type: RecipeActionTypes.CHANGE_ITEM_QTY,
 		index,
 		delta,
-		recipeIndex
+		recipeIndex,
+		id
 	}
 };
 

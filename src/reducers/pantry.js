@@ -1,26 +1,20 @@
 import * as PantryActionTypes from '../actionTypes/pantry';
-import { addID } from '../methods/switch-funcs.js';
+import * as funcs from '../methods/switch-funcs.js';
 import { pantry } from '../initial-state';
 
 export default function Pantry(state=pantry, action) {	
 	switch(action.type){
 		case PantryActionTypes.ADD_ITEM: {
-			const addItemList = [...state.food,   {
-		        name: action.name,
-		        ndbno: action.ndbno,
-		        qty: action.qty || 0,
-		        id: action.id
-		    }];
 		    return {
 				...state,
-				food: addItemList
+				food: funcs.addItem(state.food, action)
 		 	};
 		}
 
 		case PantryActionTypes.ADD_ID: {
 			return {
 				...state,
-				food: addID(state.food, action)
+				food: funcs.addID(state.food, action)
 			}
 		}
 

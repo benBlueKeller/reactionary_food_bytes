@@ -28,6 +28,18 @@ export default function RecipeReducer(state=recipes, action) {
 		case RecipeActionTypes.ADD_ID: {
 			return {
 				...state,
+				mine: state.mine.map((recipe, i) => {
+					if(i === action.recipeIndex) {
+						return {
+							...recipe,
+							food: funcs.addID(recipe.food, action)
+						};
+					}
+					return recipe;
+				})
+		 	};
+			return {
+				...state,
 				food: funcs.addID(state.food, action)
 			}
 		}

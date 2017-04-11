@@ -38,8 +38,9 @@ const dataLogger = store => next => action => {
 				return store.getState().pantry;
 			case 'cart':
 				return store.getState().cart;
-			case 'recipes':
-				return store.getState().recipes;
+			case 'recipes': {
+				return store.getState().recipes.mine[body.sub_location];
+			}
 		}
 	}
 
@@ -78,7 +79,7 @@ const dataLogger = store => next => action => {
 	}
 
 	if(action.type.includes('CHANGE_ITEM_QTY')) {
-		if(location().food && action.id) {
+		try {
 			var newQty;	 
 			for(let item of location().food) {
 				if(item.id === action.id) newQty = item.qty + action.delta;
@@ -94,7 +95,7 @@ const dataLogger = store => next => action => {
 				},
 				{ qty: newQty }
 				);
-		} else {
+		} catch (e) {
 			console.warn("insufficient data to log qty change \n location:", location(), '\naction id:', action.id);
 		}
 	}

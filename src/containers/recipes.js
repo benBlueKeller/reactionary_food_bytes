@@ -36,7 +36,7 @@ class Recipe extends Component {
                 // TODO:: as you think about data structures, find better keys
                 <Item name={item.name} 
                 qty={item.qty}
-                onChange={function(delta) {changeItemQty(index, delta, selected)}}
+                onChange={function(delta) {changeItemQty(index, delta, selected, item.id)}}
                 onRemove={function() {removeItem(index, selected)}} 
                 key={typeof item.ndbno !== "undefined" ? item.ndbno : index} /> );
             })}

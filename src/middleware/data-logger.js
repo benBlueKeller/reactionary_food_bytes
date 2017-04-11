@@ -49,11 +49,13 @@ const dataLogger = store => next => action => {
 			'POST', 
 			(json) => {
 				console.log(json);
+				var type = body.location !== 'cart' ? body.location + '/ADD_ID' : body.location + '/' + body.sub_location + '/ADD_ID';
 				store.dispatch({
-					type: body.location + '/ADD_ID',
+					type,
 					ndbno: action.ndbno,
 					name: action.name,
-					id: json._id
+					id: json._id,
+					recipeIndex: action.recipeIndex
 				});
 			}, 
 			body

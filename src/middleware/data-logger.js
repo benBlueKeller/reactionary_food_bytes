@@ -23,6 +23,9 @@ const dataLogger = store => next => action => {
 		...action,
 		location: action.type.slice(0, action.type.indexOf("/"))
 	}
+	if(body.location === 'recipes') {
+		body.sub_location = action.recipeIndex
+	}
 
 	/**
 	 * location returns the store object associated with the string body.location

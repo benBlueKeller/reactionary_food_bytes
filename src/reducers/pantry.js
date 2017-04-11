@@ -1,5 +1,5 @@
 import * as PantryActionTypes from '../actionTypes/pantry';
-import * as funcs from '../methods/switch-funcs.js';
+import * as funcs from '../methods/reducer-funcs.js';
 import { pantry } from '../initial-state';
 
 export default function Pantry(state=pantry, action) {	

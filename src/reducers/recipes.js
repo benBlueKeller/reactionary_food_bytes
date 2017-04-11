@@ -1,4 +1,5 @@
 import * as RecipeActionTypes from '../actionTypes/recipes';
+import * as funcs from '../methods/reducer-funcs.js';
 import { recipes } from '../initial-state';
 
 export default function RecipeReducer(state=recipes, action) {	
@@ -22,6 +23,13 @@ export default function RecipeReducer(state=recipes, action) {
 					return recipe;
 				})
 		 	};
+		}
+
+		case RecipeActionTypes.ADD_ID: {
+			return {
+				...state,
+				food: funcs.addID(state.food, action)
+			}
 		}
 
 		case RecipeActionTypes.REMOVE_ITEM: {

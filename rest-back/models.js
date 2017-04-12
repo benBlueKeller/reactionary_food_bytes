@@ -14,7 +14,7 @@ var FoodSchema = new Schema({
 	ndbno: String,
 	qty: Number,
 	location: String,
-	sub_location: Schema.types.Mixed
+	sub_location: {}
 });
 
 

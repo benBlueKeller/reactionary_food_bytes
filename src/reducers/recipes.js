@@ -5,19 +5,13 @@ import { recipes } from '../initial-state';
 export default function RecipeReducer(state=recipes, action) {	
 	switch(action.type){
 		case RecipeActionTypes.ADD_ITEM: {
-			const newFood = [...state.mine[action.recipeIndex].food,   {
-		        name: action.name,
-		        ndbno: action.ndbno,
-		        qty: 0
-		    }];
-
 		    return {
 				...state,
 				mine: state.mine.map((recipe, i) => {
 					if(i === action.recipeIndex) {
 						return {
 							...recipe,
-							food: newFood
+							food: funcs.addItem(recipe.food, action)
 						};
 					}
 					return recipe;

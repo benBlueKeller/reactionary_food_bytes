@@ -1,4 +1,6 @@
 
+import { addRecipe } from '../actions/recipes.js';
+
 let dataRoot = 'http://127.0.0.1:3040/data';
 
 function AJAX(url, type = "GET", callback, body) {
@@ -108,6 +110,12 @@ const dataLogger = store => next => action => {
 				for(let doc of json) {
 					console.log(doc);
 					doc.id = doc._id;
+					if(doc.location === 'recipes') {
+						doc.recipeIndex = doc.sub_location;
+						if(!store.getState().recipes.mine[doc.sub_location]) {
+							store.dispatch(addRecipe("data-logger:116"))
+						}
+					}
 					//FIXME::bbk dispatch only functional with pantry
 					store.dispatch({
 						type: doc.location + "/ADD_ITEM",

@@ -1,7 +1,9 @@
 //reducers/cart.js combines a reducer for shopList & basket
 import { combineReducers } from 'redux';
-import { cart } from '../initial-state';
+
 import * as CartActionTypes from '../actionTypes/cart';
+import * as funcs from '../methods/reducer-funcs.js';
+import { cart } from '../initial-state';
 
 function shopList(state = cart.shopList, action) {	
 	switch(action.type){

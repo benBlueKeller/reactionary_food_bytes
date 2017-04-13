@@ -23,10 +23,14 @@ const dataLogger = store => next => action => {
 	console.log(store.getState());
 	var body = {
 		...action,
-		location: action.type.slice(0, action.type.indexOf("/"))
+		location: action.type.slice(0, action.type.indexOf('/'))
 	}
 	if(body.location === 'recipes') {
 		body.sub_location = action.recipeIndex
+	}
+	if(body.location === 'cart') {
+		var cutLocation = action.type.slice(action.type.indexOf('/') + 1);
+		body.sub_location = cutLocation.slice(0, cutLocation.indexOf('/'));
 	}
 
 	/**
@@ -115,6 +119,10 @@ const dataLogger = store => next => action => {
 						if(!store.getState().recipes.mine[doc.sub_location]) {
 							store.dispatch(addRecipe("data-logger:116"))
 						}
+					}
+					if(doc.location === 'cart') {
+
+						var dispatchType = doc.location + '/S'
 					}
 					//FIXME::bbk dispatch only functional with pantry
 					store.dispatch({

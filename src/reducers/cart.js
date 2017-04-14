@@ -19,6 +19,13 @@ function shopList(state = cart.shopList, action) {
 		 	};
 	 	}
 
+	 	case CartActionTypes.shopList_ADD_ID: {
+			return {
+				...state,
+				food: funcs.addID(state.food, action)
+			}
+		}
+
 	    case CartActionTypes.shopList_REMOVE_ITEM: {
 			const removeItemList = [
 				...state.food.slice(0, action.index),
@@ -64,6 +71,13 @@ function basket(state = cart.basket, action) {
 				food: addItemList
 		 	};
 	 	}
+
+	 	case CartActionTypes.basket_ADD_ID: {
+			return {
+				...state,
+				food: funcs.addID(state.food, action)
+			}
+		}
 
 	    case CartActionTypes.basket_REMOVE_ITEM: {
 			const removeItemList = [

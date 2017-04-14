@@ -121,12 +121,11 @@ const dataLogger = store => next => action => {
 						}
 					}
 					if(doc.location === 'cart') {
-
-						var dispatchType = doc.location + '/S'
+						var cartType = doc.location + '/' + doc.sub_location + '/ADD_ITEM'
 					}
 					//FIXME::bbk dispatch only functional with pantry
 					store.dispatch({
-						type: doc.location + "/ADD_ITEM",
+						type: cartType ? cartType : doc.location + "/ADD_ITEM",
 						...doc
 					});
 				}

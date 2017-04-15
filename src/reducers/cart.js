@@ -15,7 +15,7 @@ function shopList(state = cart.shopList, action) {
 		    }];
 		    return {
 		        ...state,
-				food: addItemList
+				food: funcs.addItem(state.food, action)
 		 	};
 	 	}
 
@@ -68,7 +68,7 @@ function basket(state = cart.basket, action) {
 		    }];
 		    return {
 		        ...state,
-				food: addItemList
+				food: funcs.addItem(state.food, action)
 		 	};
 	 	}
 

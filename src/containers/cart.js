@@ -55,7 +55,7 @@ class Cart extends Component {
               return(
                 // TODO:: as you think about data structures, find better keys
                 <Item name={item.name} 
-                onRemove={function() {shopListRemoveItem(index)}} 
+                onRemove={function() {shopListRemoveItem(index, item.id)}} 
                 onChange={function(delta) {this.changeExpDate(index, delta)}.bind(this)} 
                 qty={this.createDateString(index)}
                 key={item.ndbno}/>

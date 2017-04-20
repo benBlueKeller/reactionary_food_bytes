@@ -4,13 +4,15 @@ import { createStore , applyMiddleware } from 'redux';
 import Reducer from './reducers/index';
 
 import dataLogger from './middleware/data-logger.js';
+import locationChanger from './middleware/location-changer.js';
+
 
 import NavLink from './components/NavLink';
 
 const store = createStore(
   Reducer,
   window.devToolsExtension && window.devToolsExtension(),
-  applyMiddleware(dataLogger)
+  applyMiddleware(locationChanger, dataLogger)
 );
 
 export default class Base extends Component {

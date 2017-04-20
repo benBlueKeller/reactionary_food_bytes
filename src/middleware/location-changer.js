@@ -1,11 +1,18 @@
 
 
-const dataLogger = store => next => action => {
-	if(action.type.slice(0, 2) === "to/") = {
-		var subsequentType = action.slice(3);
-		console.log(subsequentType);
+const locationChanger = store => next => action => {
+	if(action.type.slice(0, 3) === "to/") {
+		var splitType = action.type.split("/");
+		console.log(splitType);
+		var toLocation = splitType[1];
+		var fromLocation = splitType[3];
+		store.dispatch({
+			...action,
+			type: toLocation + '/ADD_ITEM',
+			skipLogging: true
+		});
 	}
 	next(action);
 }
 
-export default dataLogger;
+export default locationChanger;

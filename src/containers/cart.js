@@ -13,14 +13,6 @@ class Cart extends Component {
     food: PropTypes.array.isRequired
   };
 
-  addItem = (item) => {
-    this.state.food.push({
-      name: item.name,
-      ndbno: item.ndbno
-    });
-    this.setState(this.state);
-  };
-
   changeExpDate = (index, delta) => {
     var d = this.props.food[index].expDate || new Date();
     d.setDate(d.getDate() + delta);

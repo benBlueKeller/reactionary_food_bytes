@@ -13,7 +13,7 @@ class Cart extends Component {
     food: PropTypes.array.isRequired
   };
 
-  moveToPantry = (item) => {
+  toPantryAction = (item) => {
     return {
       type: "to/pantry/from/cart",
       ...item
@@ -38,7 +38,7 @@ class Cart extends Component {
     const shopListAddItem = bindActionCreators(CartActions.shopListAddItem, dispatch);
     const shopListRemoveItem = bindActionCreators(CartActions.shopListRemoveItem, dispatch);
     const shopListChangeItemQty = bindActionCreators(CartActions.shopListChangeItemQty, dispatch);
-    const addItemToPantry = bindActionCreators(this.moveToPantry, dispatch);
+    const addItemToPantry = bindActionCreators(this.toPantryAction, dispatch);
 
     const addAllToPantry = () => {
       food.map((item, index) => {

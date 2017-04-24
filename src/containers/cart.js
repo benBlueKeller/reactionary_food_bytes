@@ -15,7 +15,7 @@ class Cart extends Component {
 
   toPantryAction = (item) => {
     return {
-      type: "to/pantry/from/cart",
+      type: "to/pantry/from/cart/shopList",
       ...item
     }
   }

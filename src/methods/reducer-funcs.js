@@ -34,3 +34,15 @@ export function addID (food, action) {
 		} 		
 	}
 }
+
+export function removeItem(food, action) {
+	if (action.id) {
+		for (var i = 0; i < food.length; i++) {
+			if (food[i].id === action.id) {
+				action.index = i
+			}
+		}
+	}
+	return [...food.slice(0, action.index),
+			...food.slice(action.index + 1)]
+}

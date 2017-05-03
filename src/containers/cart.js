@@ -13,9 +13,10 @@ class Cart extends Component {
     food: PropTypes.array.isRequired
   };
 
-  toPantryAction = (item) => {
+  toPantryAction = (item, index) => {
     return {
       type: "to/pantry/from/cart/shopList",
+      index,
       ...item
     }
   }
@@ -42,7 +43,7 @@ class Cart extends Component {
 
     const addAllToPantry = () => {
       food.map((item, index) => {
-        addItemToPantry(item);
+        addItemToPantry(item, index);
       });
     }
 

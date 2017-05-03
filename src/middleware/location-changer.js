@@ -8,7 +8,7 @@ const locationChanger = store => next => action => {
 				var fromPosition = i;
 			}
 		}
-		var toLocation = typeArray[1];
+		action.toLocation = typeArray[1];
 		var fromLocation = "";
 		for (let i = fromPosition + 1; i < typeArray.length; i++) {
 			if (i > fromPosition + 1) fromLocation += "/";
@@ -21,7 +21,7 @@ const locationChanger = store => next => action => {
 		});	
 		store.dispatch({
 			...action,
-			type: toLocation + '/ADD_ITEM',
+			type: action.toLocation + '/ADD_ITEM',
 			skipLogging: true
 		});
 

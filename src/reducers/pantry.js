@@ -19,13 +19,9 @@ export default function Pantry(state=pantry, action) {
 		}
 
 		case PantryActionTypes.REMOVE_ITEM: {
-			const removeItemList = [
-				...state.food.slice(0, action.index),
-				...state.food.slice(action.index + 1)
-			];
 		    return {
 				...state,
-				food: removeItemList
+				food: funcs.removeItem(state.food, action)
 			};
 		}
 
